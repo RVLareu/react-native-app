@@ -20,11 +20,11 @@ import { AsyncStorage } from 'AsyncStorage';
 
 export default function ({ navigation }) {
 
-  const [professional_id, setProfessional_id] = useState(null);
-  const [profession_id, setProfession_id] = useState(null);
-  const [user_longitude, setUser_longitude] = useState(null);
-  const [user_latitude, setUser_latitude] = useState(null);
-  const [dist, setDist] = useState(null);
+  const [professional_id, setProfessional_id] = useState('');
+  const [profession_id, setProfession_id] = useState(1);
+  const [user_longitude, setUser_longitude] = useState('');
+  const [user_latitude, setUser_latitude] = useState('');
+  const [dist, setDist] = useState('');
   
   
   const [appliedFilters, setAppliedFilters] = useState(null);
@@ -36,18 +36,33 @@ export default function ({ navigation }) {
   
   const handleSearch = () => {
    
-    const params = new URLSearchParams([['professional_id', professional_id], ['profession_id', profession_id], ['user_longitude', user_longitude],
+    let params = new URLSearchParams([['professional_id', professional_id], ['profession_id', profession_id], ['user_longitude', user_longitude],
                                         ['user_latitude', user_latitude], ['dist', dist]]);
+   
+    let keysForDel = [];
     
+    params.forEach((value, key) => {
+      if (value == '') {
+        keysForDel.push(key);
+      }
+    });
+
+    keysForDel.forEach(key => {
+      params.delete(key);
+    });
+   
+    //params = params.toString()
+     
     const headers = {headers:{
                      'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
                 }}
                           
-    Api.post('/professionals', {params: params}, {headers: headers})
+    Api({method:'get', url:'/professionals', data: {}, params: params, headers: headers})
     .then((response) => {
       setAppliedFilters('');
       setProfessionals(response.data);
+      console.log("REQUEST");
     })
     .catch((error) => {
       console.log(error);
@@ -61,10 +76,10 @@ export default function ({ navigation }) {
       <View style={styles.container}>
         <View style={styles.formContent}>
           <View style={styles.inputContainer}>
-           <TouchableOpacity onPress={() => {handleSearch}}>
+           <TouchableOpacity onPress={() => {handleSearch()}}>
               <Icon name="search" size={25}/>
             </TouchableOpacity>   
-           <ProfessionalPicker selected={professional_id} setText={setProfessional_id}/>
+           <ProfessionalPicker selected={profession_id} setText={setProfession_id}/>
          </View>
         <View>
         <FlatList 
