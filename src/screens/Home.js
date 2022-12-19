@@ -1,5 +1,6 @@
-import React from "react";
-import { View, Linking, StyleSheet } from "react-native";
+import React, { useState }  from "react";
+import { View, Linking, StyleSheet, TouchableOpacity,
+  Picker } from "react-native";
 import {
   Layout,
   Button,
@@ -9,8 +10,9 @@ import {
   useTheme,
   TextInput
 } from "react-native-rapi-ui";
-
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { AsyncStorage } from 'AsyncStorage';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import ProfessionalPicker from "../components/ProfessionalPicker";
 
 
 export default function ({ navigation }) {
@@ -63,6 +65,17 @@ export default function ({ navigation }) {
       fontSize: 20,
     },
   });
+   
+   
+ const [text, setText] = useState('');  
+  
+ const handleText = (text) => {
+  
+    setText(text);
+    AsyncStorage.setItem.setItem("professional", text);
+  } 
+   
+  
   return (
     <Layout>
       <View
@@ -71,19 +84,17 @@ export default function ({ navigation }) {
             height: 120,
             paddingHorizontal: 20,
           }}>
-          <View style={{flex: 1, marginTop: 20}}>
+          
             <Text style={style.headerTitle}>La solución</Text>
             <Text style={style.headerTitle}>al alcance de la mano</Text>
-            <View style={style.inputContainer}>
-              <Icon name="search" size={25} />
-              <TextInput
-                placeholder="Buscar Profesional"
-                style={{color: 'grey'}}
-              />
-            </View>
-          </View>
+            
+            <TouchableOpacity onPress={() => navigation.navigate("Search")}>
+              <Icon name="search" size={25}/>
+            </TouchableOpacity>  
+         
+           <ProfessionalPicker selected={text} setText={handleText}/>
+            
         </View>
-
 
       <View
         style={{
