@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Layout } from "react-native-rapi-ui";
@@ -18,22 +18,39 @@ const getData = async () => {
 
 export default function ({ navigation }) {
 
-    var myHeaders = new Headers();
-    myHeaders.append("accept", "application/json");
-    myHeaders.append("Content-Type", "application/json");
+    const [name, setName] = useState('')
+    const [profession, setProfession] = useState('')
+    const [rating, setRating] = useState('')
+
+
+    useEffect(()=>{
+        var myHeaders = new Headers();
+        myHeaders.append("accept", "application/json");
+        myHeaders.append("Content-Type", "application/json");
+        
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+        getData()
+        .then((user_id) => {
+        fetch(`https://tdp-backend-develop.onrender.com/profile/?user_id=${user_id}`, requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                setName(result.name)
+                fetch(`https://tdp-backend-develop.onrender.com/professions?profession_id=${result.profession_id}`, requestOptions)
+                .then(response => response.json())
+                .then(result => setProfession(result.title))
+                fetch(`https://tdp-backend-develop.onrender.com/rating?professional_id=${user_id}`, requestOptions)
+                .then(response => response.json())
+                .then(result => setRating(result))
+                console.log(result)
+            })
+            .catch(error => console.log('error', error));
+    })
+    }, [])
     
-    var requestOptions = {
-        method: 'GET',
-        headers: myHeaders,
-        redirect: 'follow'
-    };
-    getData()
-    .then((user_id) => {
-    fetch(`https://tdp-backend-develop.onrender.com/profile/?user_id=${user_id}`, requestOptions)
-        .then(response => response.json())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
-})
 
     return (
 		<Layout>
@@ -58,8 +75,8 @@ export default function ({ navigation }) {
                 </View>
 
                 <View style={styles.infoContainer}>
-                    <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>Lucas Monk</Text>
-                    <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>Carpintero</Text>
+                    <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>{name}</Text>
+                    <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>{profession}</Text>
                 </View>
 
                 <View style={styles.statsContainer}>
@@ -68,7 +85,7 @@ export default function ({ navigation }) {
                         <Text style={[styles.text, styles.subText]}>Trabajos</Text>
                     </View>
                     <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
-                        <Text style={[styles.text, { fontSize: 24 }]}>4.3</Text>
+                        <Text style={[styles.text, { fontSize: 24 }]}>{rating}</Text>
                         <Text style={[styles.text, styles.subText]}>Calificación</Text>
                     </View>
 
