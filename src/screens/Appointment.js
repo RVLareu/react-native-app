@@ -21,9 +21,11 @@ export default function ({ navigation }) {
   const [date, setDate] = useState(new Date());  
   //const navigate = useNavigate();        
        
+  let selected = AsyncStorage.getItem("selected");     
+       
   const Agendar = () => {     
     Api.post("/appointments/", 
-                  JSON.stringify({ 'user_id': 1, 'professional_id': 1, 'date': getFormatedDate(date, "yyyy-MM-dd") }),
+                  JSON.stringify({ 'user_id': 1, 'professional_id': selected.id, 'date': getFormatedDate(date, "yyyy-MM-dd") }),
                 {
                     headers: { 'Content-Type': 'application/json' }
                 })    

@@ -13,6 +13,7 @@
     "@expo/vector-icons": "^13.0.0",
     "@expo/webpack-config": "^0.17.2",
     "@mui/material": "^5.11.0",
+    "@react-native-async-storage/async-storage": "~1.17.3",
     "@react-native-picker/picker": "^2.4.8",
     "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/native": "^6.0.6",
@@ -40,8 +41,7 @@
     "react-native-screens": "~3.18.0",
     "react-native-select-dropdown": "^3.1.0",
     "react-native-web": "~0.18.7",
-    "sync-storage": "^0.4.2",
-    "@react-native-async-storage/async-storage": "~1.17.3"
+    "sync-storage": "^0.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3"
