@@ -42,10 +42,12 @@ export default function ({ navigation }) {
                 setName(result.name)
                 fetch(`https://tdp-backend-develop.onrender.com/professions?profession_id=${result.profession_id}`, requestOptions)
                 .then(response => response.json())
-                .then(result => setProfession(result.title))
+                .then(result => {
+                    console.log("res",result)
+                    setProfession(result.title)})
                 fetch(`https://tdp-backend-develop.onrender.com/rating?professional_id=${user_id}`, requestOptions)
                 .then(response => response.json())
-                .then(result => setRating(result))
+                .then(result => setRating(result.mean))
                 console.log(result)
             })
             .catch(error => console.log('error', error));
@@ -56,21 +58,14 @@ export default function ({ navigation }) {
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.titleBar}>
-                    <Ionicons name="ios-arrow-back" size={24} color="#52575D"></Ionicons>
-                    <Ionicons name="add" size={24} color="#52575D"></Ionicons>
+                    <Ionicons name="settings" size={24} color="#52575D"></Ionicons>
                 </View>
 
                 <View style={{ alignSelf: "center" }}>
                     <View style={styles.profileImage}>
                         <Image source={require("../../assets/profile-pic.jpg")} style={styles.image} resizeMode="center"></Image>
                     </View>
-                    <View style={styles.dm}>
-                        <MaterialIcons name="chat" size={18} color="#DFD8C8"></MaterialIcons>
-                    </View>
                     <View style={styles.active}></View>
-                    <View style={styles.add}>
-                        <Ionicons name="ios-add" size={48} color="#DFD8C8" style={{ marginTop: 6, marginLeft: 2 }}></Ionicons>
-                    </View>
                 </View>
 
                 <View style={styles.infoContainer}>
@@ -173,16 +168,6 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         overflow: "hidden"
     },
-    dm: {
-        backgroundColor: "#41444B",
-        position: "absolute",
-        top: 20,
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        alignItems: "center",
-        justifyContent: "center"
-    },
     active: {
         backgroundColor: "#34FFB9",
         position: "absolute",
@@ -193,17 +178,7 @@ const styles = StyleSheet.create({
         width: 20,
         borderRadius: 10
     },
-    add: {
-        backgroundColor: "#41444B",
-        position: "absolute",
-        bottom: 0,
-        right: 0,
-        width: 60,
-        height: 60,
-        borderRadius: 30,
-        alignItems: "center",
-        justifyContent: "center"
-    },
+
     infoContainer: {
         alignSelf: "center",
         alignItems: "center",

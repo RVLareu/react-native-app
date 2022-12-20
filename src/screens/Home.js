@@ -1,6 +1,6 @@
-import React, { useState }  from "react";
-import { View, Linking, StyleSheet, TouchableOpacity,
-  Picker } from "react-native";
+import React, { useEffect, useState }  from "react";
+import { View, ScrollView, StyleSheet, TouchableOpacity,
+  Picker, Image} from "react-native";
 import {
   Layout,
   Button,
@@ -11,12 +11,20 @@ import {
   TextInput
 } from "react-native-rapi-ui";
 import { AsyncStorage } from 'AsyncStorage';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import ProfessionalPicker from "../components/ProfessionalPicker";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+
 
 
 export default function ({ navigation }) {
   const { isDarkmode, setTheme } = useTheme();
+  const [professionals, setProfessionals] = useState([])
+  useEffect(()=>{
+    fetch('https://tdp-backend-develop.onrender.com/professionals')
+    .then(response => response.json())
+    .then(result => {
+      console.log(result.professionals)
+      setProfessionals(result.professionals)})
+  }, [])
 
   const style = StyleSheet.create({
     header: {
@@ -30,6 +38,7 @@ export default function ({ navigation }) {
       color:  isDarkmode ? 'white' : "black",
       fontWeight: 'bold',
       fontSize: 23,
+      marginTop: 10
     },
     inputContainer: {
       height: 60,
@@ -78,6 +87,7 @@ export default function ({ navigation }) {
   
   return (
     <Layout>
+      <ScrollView vertical={true} showsVerticalScrollIndicator={false}>
       <View
           style={{
             backgroundColor: isDarkmode ? 'black' : 'white',
@@ -88,12 +98,16 @@ export default function ({ navigation }) {
             <Text style={style.headerTitle}>La solución</Text>
             <Text style={style.headerTitle}>al alcance de la mano</Text>
           
-            <TouchableOpacity onPress={() => navigation.navigate("Search")}>
-              <Icon name="search" size={25}/>
+            <TouchableOpacity onPress={() => {
+                if (isDarkmode) {
+                  setTheme("light");
+                } else {
+                  setTheme("dark");
+                }
+              }} style={{marginLeft: '90%'}}>
+              <Ionicons name="bulb" size={24} color="#52575D"></Ionicons>
+
             </TouchableOpacity>  
-         
-           <ProfessionalPicker selected={text} setText={handleText}/>
-           
         </View>
 
       <View
@@ -103,7 +117,7 @@ export default function ({ navigation }) {
           justifyContent: "center"
         }}
       >
-        <Section>
+        <Section  style={{width:'100%'}}>
           <SectionContent>
           
             <Button
@@ -116,27 +130,61 @@ export default function ({ navigation }) {
               }}
             />
 
-            <Button
-              text={isDarkmode ? "Light Mode" : "Dark Mode"}
-              status={isDarkmode ? "success" : "warning"}
-              onPress={() => {
-                if (isDarkmode) {
-                  setTheme("light");
-                } else {
-                  setTheme("dark");
-                }
-              }}
-              style={{
-                marginTop: 10,
-              }}
-            />
+            
           </SectionContent>
         </Section>
-      </View>
+        <Text style={{ fontSize: 30, color: isDarkmode ? "white" : 'black', fontWeight: "300", marginTop:30, marginBottom: 20, marginLeft: -130}}>Mejores Puntados</Text>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          {console.log("p", professionals)}
+            {professionals.map(p => {
+              return (
+                <View style={styles.mediaImageContainer} key={p.id}>
+                  <Image source={{uri:p.link_pic}} style={styles.image} resizeMode="cover"></Image>
+                  <Text style={{ fontWeight: "300", fontSize: 20, textAlign:'center' }}>{p.name}</Text>
+                </View>
+              )
+            })}
 
+        </ScrollView>
+        <Text style={{ fontSize: 30, color: isDarkmode ? "white" : 'black', fontWeight: "300", marginBottom: 20, paddingTop: 10, marginLeft: 120}}>Mejores Plomeros</Text>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          {console.log("p", professionals)}
+            {professionals.map(p => {
+              return (
+                <View style={styles.mediaImageContainer} key={p.id}>
+                  <Image source={{uri:p.link_pic}} style={styles.image} resizeMode="cover"></Image>
+                  <Text style={{ fontWeight: "300", fontSize: 20, textAlign:'center' }}>{p.name}</Text>
+                </View>
+              )
+            })}
+
+        </ScrollView>
+      </View>
+      </ScrollView>
 
     </Layout>
   );
 }
 
 
+
+const styles = StyleSheet.create({
+
+  image: {
+      flex: 1,
+      height: undefined,
+      width: undefined
+  },
+
+  mediaImageContainer: {
+      width: 180,
+      height: 200,
+      borderRadius: 12,
+      overflow: "hidden",
+      marginHorizontal: 10,
+      flex:1,
+      alignContent:'center',
+      backgroundColor: 'grey'  }
+      ,
+
+});

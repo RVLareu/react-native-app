@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView,
   TouchableOpacity } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { Layout, TopNav, useTheme } from "react-native-rapi-ui";
+import { Layout, TopNav, useTheme, themeColor } from "react-native-rapi-ui";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -35,7 +35,7 @@ export default function ({ navigation, route }) {
                 .then(result => setProfession(result.title))
                 fetch(`https://tdp-backend-develop.onrender.com/rating?professional_id=${id}`, requestOptions)
                 .then(response => response.json())
-                .then(result => setRating(result))
+                .then(result => setRating(result.mean))
                 console.log(result)
             })
             .catch(error => console.log('error', error));

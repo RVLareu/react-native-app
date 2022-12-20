@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginHorizontal: 21,
+    width: '95%'
   },
 
   listHeader: {
