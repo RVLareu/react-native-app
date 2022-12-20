@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import Api from "../components/api/Session";
 import ProfessionalPicker from "../components/ProfessionalPicker";
+import Data from "../components/ProfessionalPicker";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { AsyncStorage } from 'AsyncStorage';
 
@@ -21,14 +22,14 @@ import { AsyncStorage } from 'AsyncStorage';
 export default function ({ navigation }) {
 
   const [professional_id, setProfessional_id] = useState('');
-  const [profession_id, setProfession_id] = useState(1);
+  const [profession_id, setProfession_id] = useState('');
   const [user_longitude, setUser_longitude] = useState('');
   const [user_latitude, setUser_latitude] = useState('');
   const [dist, setDist] = useState('');
   
   
   const [appliedFilters, setAppliedFilters] = useState(null);
-  const [professionals, setProfessionals] = useState(null);
+  const [professionals, setProfessionals] = useState([]);
   
   
   let text = AsyncStorage.getItem("professional");
@@ -41,17 +42,20 @@ export default function ({ navigation }) {
    
     let keysForDel = [];
     
-    params.forEach((value, key) => {
+    
+    for (let [key,value] of params)
+    {
       if (value == '') {
         keysForDel.push(key);
       }
-    });
-
-    keysForDel.forEach(key => {
-      params.delete(key);
-    });
-   
-    //params = params.toString()
+    };
+    
+    for (let key of keysForDel)
+    {
+        params.delete(key);
+    };
+    
+    console.log(params) 
      
     const headers = {headers:{
                      'Content-Type': 'application/json',
@@ -61,8 +65,8 @@ export default function ({ navigation }) {
     Api({method:'get', url:'/professionals', data: {}, params: params, headers: headers})
     .then((response) => {
       setAppliedFilters('');
-      setProfessionals(response.data);
-      console.log("REQUEST");
+      setProfessionals(response.data.professionals);
+      console.log(professionals);
     })
     .catch((error) => {
       console.log(error);
@@ -90,10 +94,11 @@ export default function ({ navigation }) {
             return (
               <View style={styles.notificationBox}>
                 <Image style={styles.image}
-                  source={{uri: item.icon}}/>                     
-                    <Text style={styles.description} onPress={()=>navigation.navigate("Perfil")}>{item.description}</Text>
+                  source={{uri: item.link_pic}}/>                     
+                    <Text style={styles.description} onPress={()=>navigation.navigate("Perfil")}>{item.profession_id}</Text>
                     <Text style={styles.distance}>{item.name} Km</Text>
-                    <Text style={styles.icon}>{item.surname}</Text>
+                    <Text style={styles.icon}>{item.latitude}</Text>
+                    <Text style={styles.icon}>{item.longitude}</Text>
                     <Image style={styles.star} source={{uri: "https://img.icons8.com/ios/512/christmas-star.png"}}/>
               </View>
             )}}/>
