@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import Api from "../components/api/Session";
 import ProfessionalPicker from "../components/ProfessionalPicker";
+import Data from "../components/ProfessionalPicker";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { AsyncStorage } from 'AsyncStorage';
 
@@ -21,37 +22,45 @@ import { AsyncStorage } from 'AsyncStorage';
 export default function ({ navigation }) {
 
   const [professional_id, setProfessional_id] = useState('');
-  const [profession_id, setProfession_id] = useState(1);
+  const [professional_name, setProfessional_name] = useState('');
+  const [profession_id, setProfession_id] = useState('');
   const [user_longitude, setUser_longitude] = useState('');
   const [user_latitude, setUser_latitude] = useState('');
   const [dist, setDist] = useState('');
   
   
   const [appliedFilters, setAppliedFilters] = useState(null);
-  const [professionals, setProfessionals] = useState(null);
+  const [professionals, setProfessionals] = useState([]);
   
   
   let text = AsyncStorage.getItem("professional");
   
+  if (dist != ''){
+    setUser_longitude(10);
+    setUser_latitude(20);
+  }
   
   const handleSearch = () => {
    
-    let params = new URLSearchParams([['professional_id', professional_id], ['profession_id', profession_id], ['user_longitude', user_longitude],
+    let params = new URLSearchParams([['professional_id', professional_id], ['professional_name', professional_name], ['profession_id', profession_id], ['user_longitude', user_longitude],
                                         ['user_latitude', user_latitude], ['dist', dist]]);
    
     let keysForDel = [];
     
-    params.forEach((value, key) => {
+    
+    for (let [key,value] of params)
+    {
       if (value == '') {
         keysForDel.push(key);
       }
-    });
-
-    keysForDel.forEach(key => {
-      params.delete(key);
-    });
-   
-    //params = params.toString()
+    };
+    
+    for (let key of keysForDel)
+    {
+        params.delete(key);
+    };
+    
+    console.log(params) 
      
     const headers = {headers:{
                      'Content-Type': 'application/json',
@@ -61,8 +70,8 @@ export default function ({ navigation }) {
     Api({method:'get', url:'/professionals', data: {}, params: params, headers: headers})
     .then((response) => {
       setAppliedFilters('');
-      setProfessionals(response.data);
-      console.log("REQUEST");
+      setProfessionals(response.data.professionals);
+      console.log(professionals);
     })
     .catch((error) => {
       console.log(error);
@@ -75,11 +84,29 @@ export default function ({ navigation }) {
       
       <View style={styles.container}>
         <View style={styles.formContent}>
-          <View style={styles.inputContainer}>
+          <View style={styles.container}>
            <TouchableOpacity onPress={() => {handleSearch()}}>
               <Icon name="search" size={25}/>
             </TouchableOpacity>   
            <ProfessionalPicker selected={profession_id} setText={setProfession_id}/>
+           
+           <TextInput style={styles.inputs}
+                placeholder="Buscar por distancia (Km)"
+                underlineColorAndroid='transparent'
+                onChangeText={(dist) => {
+                    setDist(parseInt(dist))
+                    }
+                }/>
+                
+           <TextInput style={styles.inputs}
+                placeholder="Buscar por nombre"
+                underlineColorAndroid='transparent'
+                onChangeText={(professional_name) => {
+                    setProfessional_name(professional_name)
+                    }
+                }/>
+     
+
          </View>
         <View>
         <FlatList 
@@ -90,10 +117,11 @@ export default function ({ navigation }) {
             return (
               <View style={styles.notificationBox}>
                 <Image style={styles.image}
-                  source={{uri: item.icon}}/>                     
-                    <Text style={styles.description} onPress={()=>navigation.navigate("Perfil")}>{item.description}</Text>
+                  source={{uri: item.link_pic}}/>                     
+                    <Text style={styles.description} onPress={()=>navigation.navigate("Perfil")}>{item.profession_id}</Text>
                     <Text style={styles.distance}>{item.name} Km</Text>
-                    <Text style={styles.icon}>{item.surname}</Text>
+                    <Text style={styles.icon}>{item.latitude}</Text>
+                    <Text style={styles.icon}>{item.longitude}</Text>
                     <Image style={styles.star} source={{uri: "https://img.icons8.com/ios/512/christmas-star.png"}}/>
               </View>
             )}}/>
@@ -123,6 +151,7 @@ const styles = StyleSheet.create({
       alignItems:'center',
       flex:1,
       margin:10,
+      padding: 10,
   },
   icon:{
     width:30,
@@ -136,6 +165,12 @@ const styles = StyleSheet.create({
       marginLeft:16,
       borderBottomColor: '#FFFFFF',
       flex:1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginHorizontal: 10,
+      marginBottom: 5,
+      marginTop: 42,
+      padding: 10,
   },
   inputIcon:{
     marginLeft:15,

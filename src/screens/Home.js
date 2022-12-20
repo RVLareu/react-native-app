@@ -72,7 +72,7 @@ export default function ({ navigation }) {
  const handleText = (text) => {
   
     setText(text);
-    AsyncStorage.setItem.setItem("professional", text);
+    AsyncStorage.setItem("professional", text);
   } 
    
   
@@ -87,13 +87,13 @@ export default function ({ navigation }) {
           
             <Text style={style.headerTitle}>La solución</Text>
             <Text style={style.headerTitle}>al alcance de la mano</Text>
-            
+          
             <TouchableOpacity onPress={() => navigation.navigate("Search")}>
               <Icon name="search" size={25}/>
             </TouchableOpacity>  
          
            <ProfessionalPicker selected={text} setText={handleText}/>
-            
+           
         </View>
 
       <View
