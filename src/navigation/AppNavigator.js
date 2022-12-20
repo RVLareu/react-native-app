@@ -12,6 +12,7 @@ import SecondScreen from "../screens/SecondScreen";
 import About from "../screens/About";
 import Profile from "../screens/Profile";
 import Search from "../screens/Search";
+import Appointment from "../screens/Appointment";
 
 
 const MainStack = createNativeStackNavigator();
@@ -25,6 +26,7 @@ const Main = () => {
       <MainStack.Screen name="MainTabs" component={MainTabs} />
       <MainStack.Screen name="SecondScreen" component={SecondScreen} />
       <MainStack.Screen name="Search" component={Search} />
+      <MainStack.Screen name="Appointment" component={Appointment} />
     </MainStack.Navigator>
   );
 };

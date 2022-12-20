@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView,
+  TouchableOpacity } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Layout } from "react-native-rapi-ui";
 
@@ -84,6 +85,11 @@ export default function ({ navigation }) {
                     </View>
 
                 </View>
+                
+                <TouchableOpacity style={styles.buttonContainer} onPress={()=>navigation.navigate("Appointment")}>
+                  <Image style={styles.icon} source={{uri: "https://img.icons8.com/ios-filled/512/calendar-11.png"}}/>
+                  <Text style={styles.text}>Agendar Cita</Text> 
+                </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>
 		</Layout>
