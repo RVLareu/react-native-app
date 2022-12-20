@@ -22,6 +22,7 @@ import { AsyncStorage } from 'AsyncStorage';
 export default function ({ navigation }) {
 
   const [professional_id, setProfessional_id] = useState('');
+  const [professional_name, setProfessional_name] = useState('');
   const [profession_id, setProfession_id] = useState('');
   const [user_longitude, setUser_longitude] = useState('');
   const [user_latitude, setUser_latitude] = useState('');
@@ -34,10 +35,14 @@ export default function ({ navigation }) {
   
   let text = AsyncStorage.getItem("professional");
   
+  if (dist != ''){
+    setUser_longitude(10);
+    setUser_latitude(20);
+  }
   
   const handleSearch = () => {
    
-    let params = new URLSearchParams([['professional_id', professional_id], ['profession_id', profession_id], ['user_longitude', user_longitude],
+    let params = new URLSearchParams([['professional_id', professional_id], ['professional_name', professional_name], ['profession_id', profession_id], ['user_longitude', user_longitude],
                                         ['user_latitude', user_latitude], ['dist', dist]]);
    
     let keysForDel = [];
@@ -79,11 +84,29 @@ export default function ({ navigation }) {
       
       <View style={styles.container}>
         <View style={styles.formContent}>
-          <View style={styles.inputContainer}>
+          <View style={styles.container}>
            <TouchableOpacity onPress={() => {handleSearch()}}>
               <Icon name="search" size={25}/>
             </TouchableOpacity>   
            <ProfessionalPicker selected={profession_id} setText={setProfession_id}/>
+           
+           <TextInput style={styles.inputs}
+                placeholder="Buscar por distancia (Km)"
+                underlineColorAndroid='transparent'
+                onChangeText={(dist) => {
+                    setDist(parseInt(dist))
+                    }
+                }/>
+                
+           <TextInput style={styles.inputs}
+                placeholder="Buscar por nombre"
+                underlineColorAndroid='transparent'
+                onChangeText={(professional_name) => {
+                    setProfessional_name(professional_name)
+                    }
+                }/>
+     
+
          </View>
         <View>
         <FlatList 
@@ -128,6 +151,7 @@ const styles = StyleSheet.create({
       alignItems:'center',
       flex:1,
       margin:10,
+      padding: 10,
   },
   icon:{
     width:30,
@@ -141,6 +165,12 @@ const styles = StyleSheet.create({
       marginLeft:16,
       borderBottomColor: '#FFFFFF',
       flex:1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginHorizontal: 10,
+      marginBottom: 5,
+      marginTop: 42,
+      padding: 10,
   },
   inputIcon:{
     marginLeft:15,
