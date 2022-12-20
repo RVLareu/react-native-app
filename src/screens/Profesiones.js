@@ -17,7 +17,9 @@ export default function ({ navigation }) {
   useEffect(()=>{
     fetch('https://tdp-backend-develop.onrender.com/professions')
     .then(response => response.json())
-    .then(result => setProfessions(result))
+    .then(result => {
+      console.log(result)
+      setProfessions(result)})
   }, [])
 
   const oneProfession = ({ item }) => (
@@ -26,7 +28,7 @@ export default function ({ navigation }) {
         navigation.navigate("Profesionales", {'itemId': item.id})
       }}>
         <View style={ styles.avatarContainer }>
-          <Image source={ {uri: item.image} } style={ styles.avatar } />
+          <Image source={ {uri: item.link_pic} } style={ styles.avatar } />
         </View>      
         <Text style={ styles.name }>{item.title}</Text>
         </TouchableOpacity>
