@@ -107,9 +107,9 @@ export default function ({ navigation }) {
           <SectionContent>
           
             <Button
-              text="Vender"
+              text="Profesiones"
               onPress={() => {
-                navigation.navigate("SecondScreen");
+                navigation.navigate("Profesiones");
               }}
               style={{
                 marginTop: 10,

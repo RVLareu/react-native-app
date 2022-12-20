@@ -61,9 +61,7 @@ export default function ({ navigation, setLoggedIn, setRegister, setAuth }) {
           setLoading(false);
           setLoggedIn(true)
           setAuth(true)
-        })
-
-      }
+        })}
       )
       .catch(error => {
         setLoading(false);

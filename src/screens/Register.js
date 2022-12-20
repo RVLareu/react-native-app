@@ -22,18 +22,38 @@ export default function ({ navigation, setRegister, setLoggedIn, setAuth }) {
     const [loading, setLoading] = useState(false);
 
     async function register() {
-    setLoading(true);
-    fetch.post('https://tdp-backend-develop.onrender.com/register/',
-    data= {
+        setLoading(true);
+    var myHeaders = new Headers();
+    myHeaders.append("accept", "application/json");
+    myHeaders.append("Content-Type", "application/json");
+    
+    var raw = JSON.stringify({
         "username": email,
         "password": password
-    })
-    .then((response)=> response.json())
-    .then((response)=>{
-        console.log(response)
+    });
+    
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
+    
+    fetch("https://tdp-backend-develop.onrender.com/register/", requestOptions)
+    .then(response => response.json())
+    .then(async result => {
+      console.log(result.user_id)
+      storeData(result.user_id.toString())
+      .then(()=> {
         setLoading(false);
         setLoggedIn(true)
-    })
+        setAuth(true)
+      })}
+    )
+    .catch(error => {
+      setLoading(false);
+      console.log('error', error)
+    });
     };
 
     return (
