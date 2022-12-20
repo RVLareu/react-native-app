@@ -82,7 +82,7 @@ export default function ({ navigation }) {
   
   const handleSelect = (item) => {
   
-     navigation.navigate("Perfil");
+     navigation.navigate("Profile");
      AsyncStorage.setItem("selected", item);
 
    }  
@@ -125,9 +125,9 @@ export default function ({ navigation }) {
             return (
               <View style={styles.notificationBox}>
                 <Image style={styles.image}
-                  source={{uri: item.link_pic}} onPress={(item) => handleSelect(item)}/>                     
+                  source={{uri: item.link_pic}} />                     
                     <Text style={styles.description}>{item.profession_id}</Text>
-                    <Text style={styles.distance}>{item.name} </Text>
+                    <Text style={styles.distance} onPress={(item) => handleSelect(item)}>{item.name} </Text>
                     <Text style={styles.icon}>{item.latitude}</Text>
                     <Text style={styles.icon}>{item.longitude}</Text>
                     <Image style={styles.star} source={{uri: "https://img.icons8.com/ios/512/christmas-star.png"}}/>

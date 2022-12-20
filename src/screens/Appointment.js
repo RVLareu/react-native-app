@@ -14,6 +14,7 @@ import Api from "../components/api/Session";
 import { format } from 'date-fns';
 import Moment from 'moment';
 //import { useNavigate } from "react-router-dom";
+import { AsyncStorage } from 'AsyncStorage'; 
  
 
 export default function ({ navigation }) {

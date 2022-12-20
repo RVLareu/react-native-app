@@ -27,6 +27,7 @@ const Main = () => {
       <MainStack.Screen name="SecondScreen" component={SecondScreen} />
       <MainStack.Screen name="Search" component={Search} />
       <MainStack.Screen name="Appointment" component={Appointment} />
+      <MainStack.Screen name="Profile" component={Profile} />
     </MainStack.Navigator>
   );
 };
