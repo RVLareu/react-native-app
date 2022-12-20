@@ -14,6 +14,16 @@ import {
     useTheme,
     themeColor,
 } from "react-native-rapi-ui";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const storeData = async (value) => {
+    try {
+      await AsyncStorage.setItem('user_id', value)
+    } catch (e) {
+      // saving error
+      console.log(e)
+    }
+  }
 
 export default function ({ navigation, setRegister, setLoggedIn, setAuth }) {
     const { isDarkmode, setTheme } = useTheme();
