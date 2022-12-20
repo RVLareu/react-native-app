@@ -6,7 +6,8 @@ import {
   KeyboardAvoidingView,
   Image,
 } from "react-native";
-//import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
   Layout,
   Text,
@@ -16,7 +17,17 @@ import {
   themeColor,
 } from "react-native-rapi-ui";
 
-export default function ({ navigation, setLoggedIn }) {
+const storeData = async (value) => {
+  try {
+    await AsyncStorage.setItem('user_id', value)
+  } catch (e) {
+    // saving error
+    console.log(e)
+  }
+}
+
+
+export default function ({ navigation, setLoggedIn, setRegister, setAuth }) {
   const { isDarkmode, setTheme } = useTheme();
   //const auth = getAuth();
   const [email, setEmail] = useState("");
@@ -25,20 +36,40 @@ export default function ({ navigation, setLoggedIn }) {
 
   async function login() {
     setLoading(true);
-    setLoggedIn(true);
-    //await signInWithEmailAndPassword(auth, email, password).catch(function (
-    //  error
-    //) {
-      // Handle Errors here.
-    //  var errorCode = error.code;
-    //  var errorMessage = error.message;
-      // ...
-    //  setLoading(false);
+    var myHeaders = new Headers();
+    myHeaders.append("accept", "application/json");
+    myHeaders.append("Content-Type", "application/json");
+    
+    var raw = JSON.stringify({
+      "username": email,
+      "password": password
+    });
+    
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+    
+    fetch("https://tdp-backend-develop.onrender.com/login/", requestOptions)
+      .then(response => response.json())
+      .then(async result => {
+        console.log(result.user_id)
+        storeData(result.user_id.toString())
+        .then(()=> {
+          setLoading(false);
+          setLoggedIn(true)
+          setAuth(true)
+        })
 
-    //  alert(errorMessage);
-    //});
+      }
+      )
+      .catch(error => {
+        setLoading(false);
+        console.log('error', error)
+      });
   }
-
   return (
     <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1 }}>
       <Layout>
@@ -127,7 +158,9 @@ export default function ({ navigation, setLoggedIn }) {
               <Text size="md">No tiene una cuenta?</Text>
               <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate("Register");
+                  setRegister(true)
+                  setLoggedIn(true)
+                  // navigation.navigate("Register");
                 }}
               >
                 <Text
@@ -141,24 +174,7 @@ export default function ({ navigation, setLoggedIn }) {
                 </Text>
               </TouchableOpacity>
             </View>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                marginTop: 10,
-                justifyContent: "center",
-              }}
-            >
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate("ForgetPassword");
-                }}
-              >
-                <Text size="md" fontWeight="bold">
-                  Olvidé mi contraseña
-                </Text>
-              </TouchableOpacity>
-            </View>
+           
             <View
               style={{
                 flexDirection: "row",

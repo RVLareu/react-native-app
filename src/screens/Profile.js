@@ -2,15 +2,46 @@ import React from "react";
 import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Layout } from "react-native-rapi-ui";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+const getData = async () => {
+    try {
+        const value = await AsyncStorage.getItem('user_id')
+        console.log("value:", value)
+        return value
+    } catch(e) {
+      // error reading value
+        console.log(e)
+    }
+}
 
 export default function ({ navigation }) {
+
+    var myHeaders = new Headers();
+    myHeaders.append("accept", "application/json");
+    myHeaders.append("Content-Type", "application/json");
+    
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+    getData()
+    .then((user_id) => {
+    fetch(`https://tdp-backend-develop.onrender.com/profile/?user_id=${user_id}`, requestOptions)
+        .then(response => response.json())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+})
+
     return (
 		<Layout>
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.titleBar}>
                     <Ionicons name="ios-arrow-back" size={24} color="#52575D"></Ionicons>
-                    <Ionicons name="add" size={24} color="#52575D"></Ionicons>
+                    <Ionicons name="bulb" size={24} color="#52575D"></Ionicons>
                 </View>
 
                 <View style={{ alignSelf: "center" }}>
