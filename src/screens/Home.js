@@ -82,7 +82,13 @@ export default function ({ navigation }) {
   
     setText(text);
     AsyncStorage.setItem("professional", text);
-  } 
+  }
+
+  const handleSelect = (p) => {
+       console.log(p);
+       navigation.navigate("ProfessionalProfile", {"name2": p.name, "profession_id": p.profession_id, "id": p.id});
+       AsyncStorage.setItem("selected", p);
+     }
    
   
   return (
@@ -177,7 +183,7 @@ export default function ({ navigation }) {
               return (
                 <View style={styles.mediaImageContainer} key={p.id}>
                   <Image source={{uri:p.link_pic}} style={styles.image} resizeMode="cover"></Image>
-                  <Text style={{ fontWeight: "300", fontSize: 20, textAlign:'center' }}>{p.name}</Text>
+                  <Text style={{ fontWeight: "300", fontSize: 20, textAlign:'center' }} onPress={() => handleSelect(p)}>{p.name}</Text>
                 </View>
               )
             })}
