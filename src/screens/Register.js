@@ -57,6 +57,7 @@ export default function ({ navigation, setRegister, setLoggedIn, setAuth }) {
       .then(()=> {
         setLoading(false);
         setLoggedIn(true)
+        setRegister(false)
         setAuth(true)
       })}
     )
