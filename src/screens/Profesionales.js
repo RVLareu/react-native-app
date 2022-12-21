@@ -42,11 +42,11 @@ export default function ({ navigation, route }) {
     </View>    
   );
 
-  headerComponent = () => {
+  const headerComponent = () => {
     return <Text style={ styles.listHeadline }>Profesionales</Text>        
   }
 
-  listSeparator = () => {
+  const listSeparator = () => {
     return <View style={ styles.separator } />
   }    
   const { isDarkmode } = useTheme();
