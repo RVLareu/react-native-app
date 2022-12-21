@@ -11,6 +11,7 @@ import Home from "../screens/Home";
 import Profesiones from "../screens/Profesiones";
 import Profesionales from "../screens/Profesionales";
 import ProfessionalProfile from "../screens/ProfessionalProfile";
+import ProfileEdit from "../screens/ProfileEdit";
 
 
 import About from "../screens/About";
@@ -31,7 +32,7 @@ const Main = () => {
       <MainStack.Screen name="Profesiones" component={Profesiones} />
       <MainStack.Screen name="Profesionales" component={Profesionales} />
       <MainStack.Screen name="ProfessionalProfile" component={ProfessionalProfile} />
-
+      <MainStack.Screen name='ProfileEdit' component={ProfileEdit} />
       <MainStack.Screen name="Search" component={Search} />
       <MainStack.Screen name="Appointment" component={Appointment} />
       <MainStack.Screen name="Profile" component={Profile} />

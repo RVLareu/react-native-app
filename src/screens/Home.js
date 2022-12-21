@@ -131,6 +131,30 @@ export default function ({ navigation }) {
             />
 
             
+            <Button
+              text="Edita tu perfil"
+              onPress={() => {
+                navigation.navigate("ProfileEdit");
+              }}
+              style={{
+                marginTop: 10,
+              }}
+            />
+
+            <Button
+              text={isDarkmode ? "Light Mode" : "Dark Mode"}
+              status={isDarkmode ? "success" : "warning"}
+              onPress={() => {
+                if (isDarkmode) {
+                  setTheme("light");
+                } else {
+                  setTheme("dark");
+                }
+              }}
+              style={{
+                marginTop: 10,
+              }}
+            />
           </SectionContent>
         </Section>
         <Text style={{ fontSize: 30, color: isDarkmode ? "white" : 'black', fontWeight: "300", marginTop:30, marginBottom: 20, marginLeft: -130}}>Mejores Puntados</Text>
