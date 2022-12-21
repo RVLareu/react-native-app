@@ -37,7 +37,7 @@ export default function ({ navigation, route }) {
                 fetch(`https://tdp-backend-develop.onrender.com/professions?profession_id=${profession_id}`, requestOptions)
                 .then(response => response.json())
                 .then(result2 => setProfession(result2.title))
-                .then(console.log(result2))
+                .then((result2) => console.log(result2))
                 fetch(`https://tdp-backend-develop.onrender.com/rating?professional_id=${id}`, requestOptions)
                 .then(response => response.json())
                 .then(result => setRating(result.mean))
