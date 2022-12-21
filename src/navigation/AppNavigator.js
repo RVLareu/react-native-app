@@ -14,7 +14,7 @@ import ProfessionalProfile from "../screens/ProfessionalProfile";
 import ProfileEdit from "../screens/ProfileEdit";
 
 
-import About from "../screens/About";
+import Citas from "../screens/Citas";
 import Profile from "../screens/Profile";
 import Search from "../screens/Search";
 import Appointment from "../screens/Appointment";
@@ -79,11 +79,11 @@ const MainTabs = () => {
         }}
       />
       <Tabs.Screen
-        name="About"
-        component={About}
+        name="Citas"
+        component={Citas}
         options={{
           tabBarLabel: ({ focused }) => (
-            <TabBarText focused={focused} title="About" />
+            <TabBarText focused={focused} title="Citas" />
           ),
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} icon={"ios-information-circle"} />
