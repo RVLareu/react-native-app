@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView,
   TouchableOpacity } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { Layout, TopNav, useTheme, themeColor } from "react-native-rapi-ui";
+import { Layout, TopNav, useTheme, Button, themeColor } from "react-native-rapi-ui";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -139,12 +139,14 @@ export default function ({ navigation, route }) {
                         </View>
                     </View>
 
-                </View>
+                </View>                
                 
-                <TouchableOpacity style={styles.buttonContainer} onPress={()=>navigation.navigate("Appointment",  {"name": name2, "profession_id": profession_id, "id": id})}>
-                  <Image style={styles.icon} source={{uri: "https://img.icons8.com/ios-filled/512/calendar-11.png"}}/>
-                  <Text style={styles.text}>Agendar Cita</Text> 
-                </TouchableOpacity>
+                <View style={styles.section}>
+                        <Button
+                            text={"Agendar"}
+                            onPress={() => navigation.navigate("Appointment",  {"name": name2, "profession_id": profession_id, "id": id})}
+                        />
+               </View>
             </ScrollView>
         </SafeAreaView>
 		</Layout>
@@ -269,5 +271,9 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         marginTop: 3,
         marginRight: 20
+    },
+    section: {
+        paddingTop: 20,
+        paddingBottom: 20
     }
 });

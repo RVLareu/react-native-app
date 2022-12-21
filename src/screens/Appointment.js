@@ -25,9 +25,9 @@ export default function ({ navigation, route }) {
   const [showAlert, setShowAlert] = useState(false);
        
   let selected = AsyncStorage.getItem("selected");
-  let user_id = AsyncStorage.getItem("user_id");  
+  const user_id = AsyncStorage.getItem("user_id");  
   
-  //console.log(selected);  
+  console.log(user_id);  
   
   const { name, proffesion_id, id} = route.params; 
   
@@ -50,7 +50,7 @@ export default function ({ navigation, route }) {
     
     console.log(date2)
     Api.post("/appointments/", 
-                  JSON.stringify({ 'user_id': 2, 'professional_id': id, 'date': date2 }),
+                  JSON.stringify({ 'user_id': user_id, 'professional_id': id, 'date': date2 }),
                 {
                     headers: { 'Content-Type': 'application/json' }
                 })  

@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, TouchableOpaci
 import { Layout, TextInput, Button,useTheme, TopNav } from "react-native-rapi-ui";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import FileLoader from '../components/FileLoader';
 
 
 const getData = async () => {
@@ -123,6 +124,10 @@ export default function ({ navigation }) {
                             }}
                         />) }
                     </View>
+                    
+                    <Text>Cargar foto de perfil </Text>
+                    
+                    <FileLoader/>
                     
                     <View style={styles.section}>
                         <Button

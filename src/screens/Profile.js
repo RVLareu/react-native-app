@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView,
      } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { Layout, useTheme ,TopNav} from "react-native-rapi-ui";
+import { Layout, TextInput, Button, useTheme, TopNav } from "react-native-rapi-ui";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const getData = async () => {
@@ -44,9 +44,9 @@ export default function ({ navigation }) {
                 setName(result.name)
                 fetch(`https://tdp-backend-develop.onrender.com/professions?profession_id=${result.profession_id}`, requestOptions)
                 .then(response => response.json())
-                .then(result => {
-                    console.log("res",result)
-                    setProfession(result.title)})
+                .then(result2 => {
+                    console.log("res",result2)
+                    setProfession(result2.title)})
                 fetch(`https://tdp-backend-develop.onrender.com/rating?professional_id=${user_id}`, requestOptions)
                 .then(response => response.json())
                 .then(result => setRating(result.mean))
@@ -143,6 +143,14 @@ export default function ({ navigation }) {
                     </View>
 
                 </View>
+                
+                <View style={styles.section}>
+                        <Button
+                            text={"Editar"}
+                            onPress={() => navigation.navigate("ProfileEdit")}
+                        />
+                    </View>
+
 
             </ScrollView>
         </SafeAreaView>
@@ -248,5 +256,9 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         marginTop: 3,
         marginRight: 20
+    },
+    section: {
+        paddingTop: 20,
+        paddingBottom: 20
     }
 });
