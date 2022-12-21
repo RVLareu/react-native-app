@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 //import { useNavigate } from "react-router-dom";
 
 //const FILELOADER_URL = '/loadFiles';
 
-const FileLoader = ({ navigation }) => {
+export default function ({ navigation }) {
 
     const CLOUD_NAME = 'dwx9rqfjh';
     const UPLOAD_PRESET = 'z87owhgv';
@@ -13,6 +15,7 @@ const FileLoader = ({ navigation }) => {
     const [url, setUrl] = useState("");
 
     const [success, setSuccess] = useState(false);
+    
     //const navigate = useNavigate();
 
     const upload = async () => {
@@ -25,8 +28,8 @@ const FileLoader = ({ navigation }) => {
             {method: "POST",
                 body: data})
             .then(resp => resp.json())
-            .then(data => {
-                setUrl(data.url)})
+            .then(data => setUrl(data.url))
+            .then(AsyncStorage.setItem("image_url",  url))
             .then(setSuccess(true))
           
             //const data2 = await response.json()
@@ -40,9 +43,9 @@ const FileLoader = ({ navigation }) => {
                     <section style={{backgroundColor: 'grey'}}>
                         <h1>Foto cargada con Exito!</h1>
                         <img src={url} alt="Preview"/>
-                        <button onClick={() => {navigation.navigate(-1);
-                          window.localStorage.setItem("url",  url)}}> Volver </button>
-
+                        <button onClick={() => {
+                            //navigation.goBack();
+                            AsyncStorage.setItem("image_url",  url)}}> Volver </button>
                     </section>)
 
                 : (<section className="custom" style={{backgroundColor: 'grey'}}>
@@ -64,4 +67,4 @@ const FileLoader = ({ navigation }) => {
                 </section>)}
         </>
     );
-}; export default FileLoader
+};

@@ -57,15 +57,15 @@ export default function ({ navigation }) {
 
     const saveProfileChanges = () => {
         getData()
-            .then((user_id) => {
+            .then(async (user_id) => {
                 var myHeaders = new Headers();
                 myHeaders.append("accept", "application/json");
                 myHeaders.append("Content-Type", "application/json");
-                
+                const image_url = await AsyncStorage.getItem('image_url')
                 var raw = JSON.stringify({
                     "user_id": user_id,
                     "name": newName,
-                    "link_pic": newLinkpic,
+                    "link_pic": image_url,
                     "longitude": newLongitude,
                     "latitude": newLatitude,
                     "profession_id": newProfessionId
