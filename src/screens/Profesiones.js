@@ -35,13 +35,14 @@ export default function ({ navigation }) {
     </View>    
   );
 
-  headerComponent = () => {
+  const headerComponent = () => {
     return <Text style={ styles.listHeadline }>Profesiones</Text>        
   }
 
-  listSeparator = () => {
+  const listSeparator = () => {
     return <View style={ styles.separator } />
   }    
+  
   const { isDarkmode } = useTheme();
   return (
     <Layout>
