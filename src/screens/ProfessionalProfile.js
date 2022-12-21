@@ -41,11 +41,10 @@ export default function ({ navigation, route }) {
                 .then(result2 => {
                     console.log("professions", result2)
                     setProfession(result2.title)})
-                .then((result2) => console.log(result2))
                 fetch(`https://tdp-backend-develop.onrender.com/rating?professional_id=${id}`, requestOptions)
                 .then(response => response.json())
                 .then(result => setRating(result.mean))
-                console.log(result)
+                
             })
             .catch(error => console.log('error', error));
     
