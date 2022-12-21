@@ -136,16 +136,6 @@ export default function ({ navigation }) {
               }}
             />
 
-            
-            <Button
-              text="Edita tu perfil"
-              onPress={() => {
-                navigation.navigate("ProfileEdit");
-              }}
-              style={{
-                marginTop: 10,
-              }}
-            />
 
             <Button
               text={isDarkmode ? "Light Mode" : "Dark Mode"}

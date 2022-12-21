@@ -1,9 +1,9 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView,
-  TouchableOpacity } from "react-native";
+     } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { Layout } from "react-native-rapi-ui";
+import { Layout, useTheme ,TopNav} from "react-native-rapi-ui";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const getData = async () => {
@@ -19,10 +19,12 @@ const getData = async () => {
 
 
 export default function ({ navigation }) {
+
+
     const [name, setName] = useState('')
     const [profession, setProfession] = useState('')
     const [rating, setRating] = useState('')
-
+    const { isDarkmode} = useTheme();
 
     useEffect(()=>{
         var myHeaders = new Headers();
@@ -55,10 +57,25 @@ export default function ({ navigation }) {
     }, [])
     return (
 		<Layout>
+            <TopNav
+            middleContent="Perfil"
+            leftContent={
+            <Ionicons
+                name="chevron-back"
+                size={20}
+                color={isDarkmode ? themeColor.white100 : "#191921"}
+            />
+            }
+            leftAction={() => navigation.goBack()}
+            rightContent={
+                <Ionicons name="settings" size={24} color="#52575D"></Ionicons>
+            }
+            rightAction={() => navigation.navigate("ProfileEdit")}
+        />
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.titleBar}>
-                    <Ionicons name="settings" size={24} color="#52575D"></Ionicons>
+                   
                 </View>
 
                 <View style={{ alignSelf: "center" }}>

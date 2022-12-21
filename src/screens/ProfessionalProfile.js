@@ -15,11 +15,14 @@ export default function ({ navigation, route }) {
     const { isDarkmode } = useTheme();
     const { name2, profession_id, id} = route.params;
 
+
     useEffect(()=>{
 
-        console.log(name)
-        console.log(profession_id)
-        console.log(id)
+        console.log("params", name2)
+        console.log("params", profession_id)
+        console.log("params", id)
+        setName(name2)
+
         var myHeaders = new Headers();
         myHeaders.append("accept", "application/json");
         myHeaders.append("Content-Type", "application/json");
@@ -33,11 +36,12 @@ export default function ({ navigation, route }) {
         fetch(`https://tdp-backend-develop.onrender.com/profile/?user_id=${id}`, requestOptions)
             .then(response => response.json())
             .then(result => {
-                setName(result.name2)
                 fetch(`https://tdp-backend-develop.onrender.com/professions?profession_id=${profession_id}`, requestOptions)
                 .then(response => response.json())
-                .then(result2 => setProfession(result2.title))
-                .then(console.log(result2))
+                .then(result2 => {
+                    console.log("professions", result2)
+                    setProfession(result2.title)})
+                .then((result2) => console.log(result2))
                 fetch(`https://tdp-backend-develop.onrender.com/rating?professional_id=${id}`, requestOptions)
                 .then(response => response.json())
                 .then(result => setRating(result.mean))

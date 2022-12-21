@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity } from "react-native";
-import { Layout, TextInput, Button } from "react-native-rapi-ui";
+import { Layout, TextInput, Button,useTheme, TopNav } from "react-native-rapi-ui";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+
 
 const getData = async () => {
     try {
@@ -21,6 +23,7 @@ export default function ({ navigation }) {
     const [newLatitude, setNewLatitude] = useState(undefined);
 
     const [professions, setProfessions] = useState([]);
+    const { isDarkmode} = useTheme();
 
 
     useEffect(()=>{
@@ -81,12 +84,19 @@ export default function ({ navigation }) {
 
     return (
 		<Layout>
+            <TopNav
+            middleContent="Editar Perfil"
+            leftContent={
+            <Ionicons
+                name="chevron-back"
+                size={20}
+                color={isDarkmode ? themeColor.white100 : "#191921"}
+            />
+            }
+            leftAction={() => navigation.goBack()}
+        />
             <SafeAreaView style={styles.container}>
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    <View style={styles.title}>
-                        <Text style={styles.headerTitle}>Edita tu perfil</Text>
-                    </View>
-
                     <View style={styles.section}>
                         <Text>Nombre</Text>
                         <TextInput
