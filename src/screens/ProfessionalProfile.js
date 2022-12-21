@@ -13,9 +13,13 @@ export default function ({ navigation, route }) {
     const [profession, setProfession] = useState('')
     const [rating, setRating] = useState('')
     const { isDarkmode } = useTheme();
+    const { name2, profession_id, id} = route.params;
 
     useEffect(()=>{
-        const { name, proffesion_id, id} = route.params;
+
+        console.log(name)
+        console.log(profession_id)
+        console.log(id)
         var myHeaders = new Headers();
         myHeaders.append("accept", "application/json");
         myHeaders.append("Content-Type", "application/json");
@@ -29,10 +33,11 @@ export default function ({ navigation, route }) {
         fetch(`https://tdp-backend-develop.onrender.com/profile/?user_id=${id}`, requestOptions)
             .then(response => response.json())
             .then(result => {
-                setName(result.name)
-                fetch(`https://tdp-backend-develop.onrender.com/professions?profession_id=${proffesion_id}`, requestOptions)
+                setName(result.name2)
+                fetch(`https://tdp-backend-develop.onrender.com/professions?profession_id=${profession_id}`, requestOptions)
                 .then(response => response.json())
-                .then(result => setProfession(result.title))
+                .then(result2 => setProfession(result2.title))
+                .then(console.log(result2))
                 fetch(`https://tdp-backend-develop.onrender.com/rating?professional_id=${id}`, requestOptions)
                 .then(response => response.json())
                 .then(result => setRating(result.mean))
@@ -132,7 +137,7 @@ export default function ({ navigation, route }) {
 
                 </View>
                 
-                <TouchableOpacity style={styles.buttonContainer} onPress={()=>navigation.navigate("Appointment")}>
+                <TouchableOpacity style={styles.buttonContainer} onPress={()=>navigation.navigate("Appointment",  {"name": name2, "profession_id": profession_id, "id": id})}>
                   <Image style={styles.icon} source={{uri: "https://img.icons8.com/ios-filled/512/calendar-11.png"}}/>
                   <Text style={styles.text}>Agendar Cita</Text> 
                 </TouchableOpacity>

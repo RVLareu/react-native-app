@@ -10,7 +10,7 @@ import {
   useTheme,
   TextInput
 } from "react-native-rapi-ui";
-import { AsyncStorage } from 'AsyncStorage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 

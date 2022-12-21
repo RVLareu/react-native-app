@@ -9,30 +9,42 @@ import {
   ScrollView,
   ImageBackground
 } from 'react-native';
-import DatePicker, { getFormatedDate }  from 'react-native-modern-datepicker';
+import DatePicker  from 'react-native-modern-datepicker';
+import { getFormatedDate }  from 'react-native-modern-datepicker';
+import { format } from 'date-fns'
 import Api from "../components/api/Session";
-import { format } from 'date-fns';
-import Moment from 'moment';
-//import { useNavigate } from "react-router-dom";
-import { AsyncStorage } from 'AsyncStorage'; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import moment from 'moment'
  
 
-export default function ({ navigation }) {
+export default function ({ navigation, route }) {
 
   const [date, setDate] = useState(new Date());  
-  //const navigate = useNavigate();        
        
-  let selected = AsyncStorage.getItem("selected");     
+  let selected = AsyncStorage.getItem("selected");
+  let user_id = AsyncStorage.getItem("user_id");  
+  
+  //console.log(selected);  
+  
+  const { name, proffesion_id, id} = route.params; 
        
-  const Agendar = () => {     
+  const Agendar = () => {   
+    console.log(date) 
+    //const date2=format(date, "yyyy-MM-dd'T'HH:mm:ss.SSS").toString()
+    //const date2=date.toString("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    
+    const date2 = moment(date).format("YYYY-MM-DD[T]HH:mm:ss.sss[Z]").toString();
+    
+    console.log(date2)
     Api.post("/appointments/", 
-                  JSON.stringify({ 'user_id': 1, 'professional_id': selected.id, 'date': getFormatedDate(date, "yyyy-MM-dd") }),
+                  JSON.stringify({ 'user_id': 2, 'professional_id': id, 'date': date2 }),
                 {
                     headers: { 'Content-Type': 'application/json' }
                 })    
   }
   
   const CambiarFecha = (date) => {
+     
      setDate(date)
   }
   
@@ -64,7 +76,7 @@ export default function ({ navigation }) {
         <View style={styles.datePickerView}>
           <DatePicker style={styles.datePicker}
             date={date}
-            onSelectedChange={(date) => CambiarFecha(getFormatedDate(date, 'YYYY/MM/DD'))}
+            onSelectedChange={(date) => CambiarFecha(date)}
           />
         </View>
         

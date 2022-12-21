@@ -126,11 +126,7 @@ export default function ({ navigation }) {
                     </View>
 
                 </View>
-                
-                <TouchableOpacity style={styles.buttonContainer} onPress={()=>navigation.navigate("Appointment")}>
-                  <Image style={styles.icon} source={{uri: "https://img.icons8.com/ios-filled/512/calendar-11.png"}}/>
-                  <Text style={styles.text}>Agendar Cita</Text> 
-                </TouchableOpacity>
+
             </ScrollView>
         </SafeAreaView>
 		</Layout>

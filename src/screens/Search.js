@@ -16,7 +16,7 @@ import Api from "../components/api/Session";
 import ProfessionalPicker from "../components/ProfessionalPicker";
 import Data from "../components/ProfessionalPicker";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { AsyncStorage } from 'AsyncStorage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function ({ navigation }) {
@@ -58,9 +58,7 @@ export default function ({ navigation }) {
     for (let key of keysForDel)
     {
         params.delete(key);
-    };
-    
-    console.log(params) 
+    };    
      
     const headers = {headers:{
                      'Content-Type': 'application/json',
@@ -71,7 +69,6 @@ export default function ({ navigation }) {
     .then((response) => {
       setAppliedFilters('');
       setProfessionals(response.data.professionals);
-      console.log(professionals);
     })
     .catch((error) => {
       console.log(error);
@@ -82,7 +79,8 @@ export default function ({ navigation }) {
   
   const handleSelect = (item) => {
   
-     navigation.navigate("Profile");
+     console.log(item);
+     navigation.navigate("ProfessionalProfile", {"name2": item.name, "profession_id": item.profession_id, "id": item.id});
      AsyncStorage.setItem("selected", item);
 
    }  
@@ -127,7 +125,7 @@ export default function ({ navigation }) {
                 <Image style={styles.image}
                   source={{uri: item.link_pic}} />                     
                     <Text style={styles.description}>{item.profession_id}</Text>
-                    <Text style={styles.distance} onPress={(item) => handleSelect(item)}>{item.name} </Text>
+                    <Text style={styles.distance} onPress={() => handleSelect(item)}>{item.name} </Text>
                     <Text style={styles.icon}>{item.latitude}</Text>
                     <Text style={styles.icon}>{item.longitude}</Text>
                     <Image style={styles.star} source={{uri: "https://img.icons8.com/ios/512/christmas-star.png"}}/>
