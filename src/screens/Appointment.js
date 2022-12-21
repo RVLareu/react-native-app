@@ -108,9 +108,7 @@ export default function ({ navigation, route }) {
           <TouchableOpacity style={styles.buttonContainer} onPress={()=>{Agendar()}}>
             <Text style={styles.text}>Aceptar</Text>  
           </TouchableOpacity>        
-          <TouchableOpacity style={styles.buttonContainerCancel} onPress={() => navigation.navigate("Perfil")}>
-            <Text style={styles.text}>Cancelar</Text>  
-          </TouchableOpacity>        
+            
         </View>
         
         <AwesomeAlert
