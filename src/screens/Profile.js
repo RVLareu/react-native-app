@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView,
      } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { Layout, TextInput, Button, useTheme, TopNav } from "react-native-rapi-ui";
+import { Layout, TextInput, Button, useTheme, TopNav , themeColor} from "react-native-rapi-ui";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const getData = async () => {
