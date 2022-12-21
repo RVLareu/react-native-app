@@ -46,7 +46,10 @@ export default function ({ navigation }) {
                 .then(response => response.json())
                 .then(result2 => {
                     console.log("res",result2)
-                    setProfession(result2.title)})
+                    if (result2 != null) {
+                        setProfession(result2.title)
+                    }
+                        })
                 fetch(`https://tdp-backend-develop.onrender.com/rating?professional_id=${user_id}`, requestOptions)
                 .then(response => response.json())
                 .then(result => setRating(result.mean))

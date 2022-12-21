@@ -18,12 +18,18 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 export default function ({ navigation }) {
   const { isDarkmode, setTheme } = useTheme();
   const [professionals, setProfessionals] = useState([])
+  const [plomeros, setPlomeros] = useState([])
+
   useEffect(()=>{
     fetch('https://tdp-backend-develop.onrender.com/professionals')
     .then(response => response.json())
     .then(result => {
-      console.log(result.professionals)
       setProfessionals(result.professionals)})
+
+      fetch('https://tdp-backend-develop.onrender.com/professionals?profession_id=1')
+      .then(response => response.json())
+      .then(result => {
+        setPlomeros(result.professionals)})
   }, [])
 
   const style = StyleSheet.create({
@@ -139,7 +145,7 @@ export default function ({ navigation }) {
         </Section>
         <Text style={{ fontSize: 30, color: isDarkmode ? "white" : 'black', fontWeight: "300", marginTop:30, marginBottom: 20, marginLeft: -130}}>Mejores Puntados</Text>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          {console.log("p", professionals)}
+
             {professionals.map(p => {
               return (
                 <View style={styles.mediaImageContainer} key={p.id}>
@@ -152,8 +158,8 @@ export default function ({ navigation }) {
         </ScrollView>
         <Text style={{ fontSize: 30, color: isDarkmode ? "white" : 'black', fontWeight: "300", marginBottom: 20, paddingTop: 10, marginLeft: 120}}>Mejores Plomeros</Text>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          {console.log("p", professionals)}
-            {professionals.map(p => {
+
+            {plomeros.map(p => {
               return (
                 <View style={styles.mediaImageContainer} key={p.id}>
                   <Image source={{uri:p.link_pic}} style={styles.image} resizeMode="cover"></Image>

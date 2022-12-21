@@ -12,6 +12,7 @@ import Profesiones from "../screens/Profesiones";
 import Profesionales from "../screens/Profesionales";
 import ProfessionalProfile from "../screens/ProfessionalProfile";
 import ProfileEdit from "../screens/ProfileEdit";
+import Work from "../screens/Work";
 
 
 import Citas from "../screens/Citas";
@@ -36,6 +37,8 @@ const Main = () => {
       <MainStack.Screen name="Search" component={Search} />
       <MainStack.Screen name="Appointment" component={Appointment} />
       <MainStack.Screen name="Profile" component={Profile} />
+      <MainStack.Screen name="Work" component={Work} />
+
     </MainStack.Navigator>
   );
 };
