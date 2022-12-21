@@ -36,7 +36,7 @@ export default function ({ navigation, route }) {
     const [appId, setAppId] = useState(0)
     const [paid, setPaid] = useState(false)
     const [comments, setComments] = useState(false)
-    
+    const [workId, setWorkId] = useState(0)
 
 	useLayoutEffect(()=>{
         console.log("aa",route.params)
@@ -56,6 +56,7 @@ export default function ({ navigation, route }) {
                         setTitle(result.title)
                         setDescription(result.description)
                         setPrice(result.price)
+                        setWorkId(result.id)
                         console.log(result.paid)
                         if(result.paid == 'true') setPaid(true)
                         setWork(true)
@@ -95,6 +96,52 @@ export default function ({ navigation, route }) {
         console.log('error', error)
       });
     }
+
+    const pagar = () => {
+        var myHeaders = new Headers();
+        myHeaders.append("accept", "application/json");
+        myHeaders.append("Content-Type", "application/json");
+        
+        var raw = JSON.stringify({
+        "work_id": workId,
+        "description": description,
+        'price': price,
+        "appointment_id": appId,
+        'paid': true
+        });
+        
+        var requestOptions = {
+        method: 'PUT',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+        };
+        
+        fetch("https://tdp-backend-develop.onrender.com/work", requestOptions)
+        .then(response => response.json())
+            .then(()=> {
+                var rawRating = JSON.stringify({
+                    "work_id": workId,
+                    "rating": rating,
+                    'comments': comments,
+                    });
+                    
+                    var requestOptionsRating = {
+                    method: 'POST',
+                    headers: myHeaders,
+                    body: rawRating,
+                    redirect: 'follow'
+                    };
+                fetch(`https://tdp-backend-develop.onrender.com/rating`, requestOptionsRating)
+                .then(()=> navigation.navigate('Citas'))
+            })
+        .catch(error => {
+            console.log('error', error)
+        });
+
+
+    }
+
 
 		const { isDarkmode } = useTheme();
             return (
