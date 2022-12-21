@@ -23,6 +23,7 @@ const storeData = async (value) => {
   } catch (e) {
     // saving error
     console.log(e)
+    console.log("LOGUEADO "+value)
   }
 }
 

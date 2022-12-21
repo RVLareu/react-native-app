@@ -15,8 +15,21 @@ import { format } from 'date-fns'
 import Api from "../components/api/Session";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment'
+
 import AwesomeAlert from 'react-native-awesome-alerts';
  
+
+const getData = async () => {
+    try {
+        const value = await AsyncStorage.getItem('user_id2')
+        console.log("value:", value)
+        return value
+    } catch(e) {
+      // error reading value
+        console.log(e)
+    }
+}
+
 
 export default function ({ navigation, route }) {
 
@@ -25,7 +38,7 @@ export default function ({ navigation, route }) {
   const [showAlert, setShowAlert] = useState(false);
        
   let selected = AsyncStorage.getItem("selected");
-  const user_id = AsyncStorage.getItem("user_id");  
+  const user_id = getData();  
   
   console.log(user_id);  
   
@@ -49,11 +62,13 @@ export default function ({ navigation, route }) {
     const date2 = moment(date).format("YYYY-MM-DD[T]HH:mm:ss.sss[Z]").toString();
     
     console.log(date2)
+    getData()
+        .then((user_id) =>
     Api.post("/appointments/", 
                   JSON.stringify({ 'user_id': user_id, 'professional_id': id, 'date': date2 }),
                 {
                     headers: { 'Content-Type': 'application/json' }
-                })  
+                }))  
                 
    handleShowAlert();               
   }
