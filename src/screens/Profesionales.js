@@ -29,8 +29,8 @@ export default function ({ navigation, route }) {
     <View >
       <TouchableOpacity style={ styles.item } onPress={()=>{
         navigation.navigate("ProfessionalProfile", {
-            'name': item.name,
-            'proffesion_id': item.profession_id,
+            'name2': item.name,
+            'profession_id': item.profession_id,
             'id': item.id
         })
       }}>
