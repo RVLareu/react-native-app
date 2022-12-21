@@ -15,11 +15,14 @@ import { format } from 'date-fns'
 import Api from "../components/api/Session";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment'
+import AwesomeAlert from 'react-native-awesome-alerts';
  
 
 export default function ({ navigation, route }) {
 
   const [date, setDate] = useState(new Date());  
+  
+  const [showAlert, setShowAlert] = useState(false);
        
   let selected = AsyncStorage.getItem("selected");
   let user_id = AsyncStorage.getItem("user_id");  
@@ -27,8 +30,18 @@ export default function ({ navigation, route }) {
   //console.log(selected);  
   
   const { name, proffesion_id, id} = route.params; 
+  
+  
+  const handleShowAlert = () => {
+    setShowAlert(true);
+  };
+
+  const handleHideAlert = () => {
+    setShowAlert(false);
+  };
+
        
-  const Agendar = () => {   
+  async function Agendar () {   
     console.log(date) 
     //const date2=format(date, "yyyy-MM-dd'T'HH:mm:ss.SSS").toString()
     //const date2=date.toString("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -40,18 +53,16 @@ export default function ({ navigation, route }) {
                   JSON.stringify({ 'user_id': 2, 'professional_id': id, 'date': date2 }),
                 {
                     headers: { 'Content-Type': 'application/json' }
-                })    
+                })  
+                
+   handleShowAlert();               
   }
+
   
   const CambiarFecha = (date) => {
      
      setDate(date)
   }
-  
-  
-  useEffect(() => {
-    Agendar();
-    }, []);
   
 
     return (
@@ -81,13 +92,31 @@ export default function ({ navigation, route }) {
         </View>
         
         <View style={styles.buttonsContainer}>
-          <TouchableOpacity style={styles.buttonContainer} onPress={()=>{Agendar(); navigation.navigate("Home")}}>
+          <TouchableOpacity style={styles.buttonContainer} onPress={()=>{Agendar()}}>
             <Text style={styles.text}>Aceptar</Text>  
           </TouchableOpacity>        
           <TouchableOpacity style={styles.buttonContainerCancel} onPress={() => navigation.navigate("Perfil")}>
             <Text style={styles.text}>Cancelar</Text>  
           </TouchableOpacity>        
         </View>
+        
+        <AwesomeAlert
+                  show={showAlert}
+                  showProgress={false}
+                  title="Cita agendada con éxito"
+                  message={"Acordada para el día " + date}
+                  closeOnTouchOutside={true}
+                  closeOnHardwareBackPress={false}
+                  showCancelButton={false}
+                  showConfirmButton={true}
+                  confirmText="Aceptar"
+                  confirmButtonColor="#90ee90"
+                  onConfirmPressed={() => {
+                   handleHideAlert();
+                   navigation.navigate("Home");
+                   }}
+                />
+        
         
       </ScrollView>
     )
