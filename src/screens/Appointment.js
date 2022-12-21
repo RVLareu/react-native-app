@@ -9,13 +9,13 @@ import {
   ScrollView,
   ImageBackground
 } from 'react-native';
-import DatePicker  from 'react-native-modern-datepicker';
-import { getFormatedDate }  from 'react-native-modern-datepicker';
+//import DatePicker  from 'react-native-modern-datepicker';
+//import { getFormatedDate }  from 'react-native-modern-datepicker';
 import { format } from 'date-fns'
 import Api from "../components/api/Session";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment'
-
+import DatePicker from '@dietime/react-native-date-picker';
 import AwesomeAlert from 'react-native-awesome-alerts';
  
 
@@ -100,9 +100,9 @@ export default function ({ navigation, route }) {
         <Text style={styles.textSelect}>Seleccione una fecha</Text>
          
         <View style={styles.datePickerView}>
-          <DatePicker style={styles.datePicker}
+          <DatePicker
             date={date}
-            onSelectedChange={(date) => CambiarFecha(date)}
+            onChange={(value) => CambiarFecha(value)}
           />
         </View>
         
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: "#0a0a1a",
-    marginTop: '-10'
+    marginTop: 10
   },
   icon:{
     width: 20,
