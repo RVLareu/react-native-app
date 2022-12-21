@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { View, SafeAreaView, FlatList, Image, StyleSheet  } from 'react-native';
+import { Rating, AirbnbRating } from 'react-native-ratings';
 import {
 	Layout,
 	TopNav,
@@ -37,7 +38,11 @@ export default function ({ navigation, route }) {
     const [paid, setPaid] = useState(false)
     const [comments, setComments] = useState(false)
     const [workId, setWorkId] = useState(0)
+    const [rating, setRating] = useState(0)
 
+    const ratingCompleted = (rating) => {
+        setRating(rating)
+      }
 	useLayoutEffect(()=>{
         console.log("aa",route.params)
         const {appointment_id, professional_id} = route.params;
@@ -58,7 +63,7 @@ export default function ({ navigation, route }) {
                         setPrice(result.price)
                         setWorkId(result.id)
                         console.log(result.paid)
-                        if(result.paid == 'true') setPaid(true)
+                        if(result.paid) setPaid(true)
                         setWork(true)
                     }         
 
@@ -106,8 +111,9 @@ export default function ({ navigation, route }) {
         "work_id": workId,
         "description": description,
         'price': price,
-        "appointment_id": appId,
+        "title": title,
         'paid': true
+
         });
         
         var requestOptions = {
@@ -119,7 +125,7 @@ export default function ({ navigation, route }) {
         
         fetch("https://tdp-backend-develop.onrender.com/work", requestOptions)
         .then(response => response.json())
-            .then(()=> {
+            .then((r)=> {
                 var rawRating = JSON.stringify({
                     "work_id": workId,
                     "rating": rating,
@@ -133,7 +139,10 @@ export default function ({ navigation, route }) {
                     redirect: 'follow'
                     };
                 fetch(`https://tdp-backend-develop.onrender.com/rating`, requestOptionsRating)
-                .then(()=> navigation.navigate('Citas'))
+                .then((r)=> r.json())
+                .then(r => {
+                    console.log("r: ", r)
+                    navigation.navigate('Citas')})
             })
         .catch(error => {
             console.log('error', error)
@@ -212,14 +221,14 @@ export default function ({ navigation, route }) {
                                                         <Text style={{alignText: 'center', marginTop: 20, fontSize: 40, fontWeight: 'bold', textTransform: 'uppercase'}}> {title}</Text>
                                                         <Text style={{alignText: 'center', marginTop: 20, fontSize: 20}}> {description}</Text>
                                                         <Text style={{alignText: 'center', marginTop: 20, fontWeight: 'bold', fontSize: 30}}> ${price}</Text>
-                                                        <Text style={{alignText: 'center', marginTop: 20, fontWeight: 'bold', fontSize: 30}}> {paid ? <><Ionicons name="chackmark-circle-outline" size={24} color="#52575D"></Ionicons><Text>PAGADO</Text></> : <View style={{flex:1, justifyContent: 'center', alignContent:'center'}}><Text>SIN PAGAR</Text><Ionicons name="close-circle-outline" size={40} color="#52575D"></Ionicons></View>}</Text>
+                                                        <Text style={{alignText: 'center', marginTop: 20, fontWeight: 'bold', fontSize: 30}}> {paid ? <><Ionicons name="checkmark-circle-outline" size={24} color="#52575D"></Ionicons><Text>PAGADO</Text></> : <View style={{flex:1, justifyContent: 'center', alignContent:'center'}}><Text>SIN PAGAR</Text><Ionicons name="close-circle-outline" size={40} color="#52575D"></Ionicons></View>}</Text>
 
                                                         </View>
                                                         ): !userIsProfessional && work ? <View style={{flex:1, alignItems: 'center'}}>
                                                         <Text style={{alignText: 'center', marginTop: 20, fontSize: 40, fontWeight: 'bold', textTransform: 'uppercase'}}> {title}</Text>
                                                         <Text style={{alignText: 'center', marginTop: 20, fontSize: 20}}> {description}</Text>
                                                         <Text style={{alignText: 'center', marginTop: 20, fontWeight: 'bold', fontSize: 30}}> ${price}</Text>
-                                                        <Text style={{alignText: 'center', marginTop: 20, fontWeight: 'bold', fontSize: 30}}> {paid ? <><Ionicons name="chackmark-circle-outline" size={24} color="#52575D"></Ionicons><Text>PAGADO</Text></> :                                                         
+                                                        <Text style={{alignText: 'center', marginTop: 20, fontWeight: 'bold', fontSize: 30}}> {paid ? <><Ionicons name="checkmark-circle-outline" size={24} color="#52575D"></Ionicons><Text>PAGADO</Text></> :                                                         
                                                         <View style={{flex:1}}>
                                                             <TextInput
                                                             containerStyle={{ marginTop: 15}}
@@ -232,6 +241,11 @@ export default function ({ navigation, route }) {
                                                             multiline={true}
                                                             numberOfLines={5}
                                                             onChangeText={(text) => setComments(text)}
+                                                        />
+                                                        <Rating
+                                                        showRating
+                                                        onFinishRating={(rating) => ratingCompleted(rating)}
+                                                        style={{ paddingVertical: 10 }}
                                                         />
                                                         <Button text="Pagar"
                                                         onPress={() => {
