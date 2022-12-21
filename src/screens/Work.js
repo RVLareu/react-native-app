@@ -173,15 +173,17 @@ export default function ({ navigation, route }) {
                                                         <Text style={{alignText: 'center', marginTop: 20, fontSize: 20}}> {description}</Text>
                                                         <Text style={{alignText: 'center', marginTop: 20, fontWeight: 'bold', fontSize: 30}}> ${price}</Text>
                                                         <Text style={{alignText: 'center', marginTop: 20, fontWeight: 'bold', fontSize: 30}}> {paid ? <><Ionicons name="chackmark-circle-outline" size={24} color="#52575D"></Ionicons><Text>PAGADO</Text></> :                                                         
-                                                        <>
+                                                        <View style={{flex:1}}>
                                                             <TextInput
-                                                            containerStyle={{ marginTop: 15 }}
-                                                            placeholder="Comentario"
+                                                            containerStyle={{ marginTop: 15}}
+                                                            placeholder=" Comentarios "
                                                             value={comments}
                                                             autoCapitalize="none"
                                                             autoCompleteType="off"
                                                             autoCorrect={false}
                                                             keyboardType="text"
+                                                            multiline={true}
+                                                            numberOfLines={5}
                                                             onChangeText={(text) => setComments(text)}
                                                         />
                                                         <Button text="Pagar"
@@ -190,7 +192,7 @@ export default function ({ navigation, route }) {
                                                         }}
                                                         style={{
                                                             marginTop: 20,
-                                                        }}></Button></>}</Text>
+                                                        }}></Button></View>}</Text>
                                                         
 
                                                         </View> : <Text style={{alignText: 'center', marginTop: 20, fontSize: 10, fontWeight: 'bold', textTransform: 'uppercase'}}>El profesional no ha crgado el trabajo aún</Text>
