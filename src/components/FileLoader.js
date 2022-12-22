@@ -84,7 +84,7 @@ export default function ({ navigation }) {
             {method: "POST",
                 body: data})
             .then(resp => resp.json())
-            .then(data => {storeData(data.url); setUrl(value.toString())})
+            .then(data => {storeData(data.url); setUrl(data.toString())})
             .then(setSuccess(true))
             //const data2 = await response.json()
             .catch(err => console.log(err))
@@ -104,7 +104,7 @@ export default function ({ navigation }) {
               ...file,
               ...response }));*/
          //setFile(response.toString())  
-         file_uri = result.uri   
+         file_uri = result.assets[0].uri   
          //console.log("IMAGEN: "+response.toString())
          await upload()
         /*} catch (err) {
