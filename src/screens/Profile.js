@@ -100,7 +100,7 @@ export default function ({ navigation }) {
                     <View style={styles.profileImage}>
                         <Image source={{uri: profilePic}} style={styles.image} resizeMode="center"></Image>
                     </View>
-                    <View style={styles.active}></View>
+                    
                 </View>
 
                 <View style={styles.infoContainer}>
