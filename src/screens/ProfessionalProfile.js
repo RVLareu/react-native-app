@@ -158,8 +158,8 @@ const styles = StyleSheet.create({
         fontWeight: "500"
     },
     profileImage: {
-        width: 200,
-        height: 200,
+        width: 300,
+        height: 300,
         borderRadius: 100,
         overflow: "hidden"
     },
@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
         flex:1,
         width: '50%',
         marginLeft: '25%',
-        marginTop: '20%'
+        marginTop: '5%'
 
     }
 });
