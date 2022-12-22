@@ -221,14 +221,14 @@ export default function ({ navigation, route }) {
                                                         <Text style={{alignText: 'center', marginTop: 20, fontSize: 40, fontWeight: 'bold', textTransform: 'uppercase'}}> {title}</Text>
                                                         <Text style={{alignText: 'center', marginTop: 20, fontSize: 20}}> {description}</Text>
                                                         <Text style={{alignText: 'center', marginTop: 20, fontWeight: 'bold', fontSize: 30}}> ${price}</Text>
-                                                        <Text style={{alignText: 'center', marginTop: 20, fontWeight: 'bold', fontSize: 30}}> {paid ? <><Ionicons name="checkmark-circle-outline" size={24} color="#52575D"></Ionicons><Text>PAGADO</Text></> : <View style={{flex:1, justifyContent: 'center', alignContent:'center'}}><Text>SIN PAGAR</Text><Ionicons name="close-circle-outline" size={40} color="#52575D"></Ionicons></View>}</Text>
+                                                        <Text style={{alignText: 'center', marginTop: 20, fontWeight: 'bold', fontSize: 30}}> {paid ? <View style={{flex:1, justifyContent: 'center', alignContent:'center', alignItems: 'center'}}><Ionicons name="checkmark-circle-outline" size={80} color="#00FF00"></Ionicons><Text>PAGADO</Text></View> : <View style={{flex:1, justifyContent: 'center', alignContent:'center'}}><Text>SIN PAGAR</Text><Ionicons name="close-circle-outline" size={80} color="#FF0000"></Ionicons></View>}</Text>
 
                                                         </View>
                                                         ): !userIsProfessional && work ? <View style={{flex:1, alignItems: 'center'}}>
                                                         <Text style={{alignText: 'center', marginTop: 20, fontSize: 40, fontWeight: 'bold', textTransform: 'uppercase'}}> {title}</Text>
                                                         <Text style={{alignText: 'center', marginTop: 20, fontSize: 20}}> {description}</Text>
                                                         <Text style={{alignText: 'center', marginTop: 20, fontWeight: 'bold', fontSize: 30}}> ${price}</Text>
-                                                        <Text style={{alignText: 'center', marginTop: 20, fontWeight: 'bold', fontSize: 30}}> {paid ? <><Ionicons name="checkmark-circle-outline" size={24} color="#52575D"></Ionicons><Text>PAGADO</Text></> :                                                         
+                                                        <Text style={{alignText: 'center', marginTop: 20, fontWeight: 'bold', fontSize: 30}}> {paid ? <View style={{flex:1, justifyContent: 'center', alignContent:'center', alignItems: 'center'}}><Ionicons name="checkmark-circle-outline" size={80} color="#00FF00"></Ionicons><Text>PAGADO</Text></View> :                                                         
                                                         <View style={{flex:1}}>
                                                             <TextInput
                                                             containerStyle={{ marginTop: 15}}
@@ -256,7 +256,7 @@ export default function ({ navigation, route }) {
                                                         }}></Button></View>}</Text>
                                                         
 
-                                                        </View> : <Text style={{alignText: 'center', marginTop: 20, fontSize: 10, fontWeight: 'bold', textTransform: 'uppercase'}}>El profesional no ha crgado el trabajo aún</Text>
+                                                        </View> : <Text style={{marginLeft:'5%', marginTop: 30, fontSize: 20, fontWeight: 'bold', textTransform: 'uppercase', textAlign: 'center'}}>El profesional no ha cargado el trabajo aún</Text>
 }
                         
                 </SafeAreaView>
