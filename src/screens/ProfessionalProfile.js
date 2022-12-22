@@ -14,7 +14,8 @@ export default function ({ navigation, route }) {
     const [rating, setRating] = useState('')
     const { isDarkmode } = useTheme();
     const { name2, profession_id, id} = route.params;
-
+    const [comments, setComments] = useState([])
+    const [profilePic, setProfilePic] = useState('https://upload.wikimedia.org/wikipedia/commons/2/2f/No-photo-m.png')
 
     useEffect(()=>{
 
@@ -36,6 +37,7 @@ export default function ({ navigation, route }) {
         fetch(`https://tdp-backend-develop.onrender.com/profile/?user_id=${id}`, requestOptions)
             .then(response => response.json())
             .then(result => {
+                setProfilePic(result.link_pic)
                 fetch(`https://tdp-backend-develop.onrender.com/professions?profession_id=${profession_id}`, requestOptions)
                 .then(response => response.json())
                 .then(result2 => {
@@ -44,7 +46,14 @@ export default function ({ navigation, route }) {
                 fetch(`https://tdp-backend-develop.onrender.com/rating?professional_id=${id}`, requestOptions)
                 .then(response => response.json())
                 .then(result => setRating(result.mean))
-                
+                fetch(`https://tdp-backend-develop.onrender.com/rating?professional_id=${id}`)
+                .then(response => response.json())
+                .then(result =>{ try{
+                    setComments(result.ratings)
+                } catch(e) {
+                    console.log(e)
+                }}
+                    )
             })
             .catch(error => console.log('error', error));
     
@@ -64,21 +73,14 @@ export default function ({ navigation, route }) {
         />
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={styles.titleBar}>
-                    <Ionicons name="add" size={24} color="#52575D"></Ionicons>
-                </View>
+
 
                 <View style={{ alignSelf: "center" }}>
                     <View style={styles.profileImage}>
-                        <Image source={require("../../assets/profile-pic.jpg")} style={styles.image} resizeMode="center"></Image>
+                        <Image source={{uri: profilePic}} style={styles.image} resizeMode="center"></Image>
                     </View>
-                    <View style={styles.dm}>
-                        <MaterialIcons name="chat" size={18} color="#DFD8C8"></MaterialIcons>
-                    </View>
+
                     <View style={styles.active}></View>
-                    <View style={styles.add}>
-                        <Ionicons name="ios-add" size={48} color="#DFD8C8" style={{ marginTop: 6, marginLeft: 2 }}></Ionicons>
-                    </View>
                 </View>
 
                 <View style={styles.infoContainer}>
@@ -98,47 +100,26 @@ export default function ({ navigation, route }) {
 
                 </View>
 
-                <View style={{ marginTop: 32 }}>
-                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                        <View style={styles.mediaImageContainer}>
-                            <Image source={require("../../assets/media1.jpg")} style={styles.image} resizeMode="cover"></Image>
-                        </View>
-                        <View style={styles.mediaImageContainer}>
-                            <Image source={require("../../assets/media2.jpg")} style={styles.image} resizeMode="cover"></Image>
-                        </View>
-                        <View style={styles.mediaImageContainer}>
-                            <Image source={require("../../assets/media3.jpg")} style={styles.image} resizeMode="cover"></Image>
-                        </View>
-                    </ScrollView>
-                    <View style={styles.jobsCount}>
-                        <Text style={[styles.text, { fontSize: 24, color: "#DFD8C8", fontWeight: "300" }]}>3</Text>
-                        <Text style={[styles.text, { fontSize: 12, color: "#DFD8C8", textTransform: "uppercase" }]}>Destacados</Text>
-                    </View>
-                </View>
 
                 <Text style={[styles.subText, styles.recent]}>Últimos Trabajos</Text>
 
                 <View style={{ alignItems: "center" }}>
-				
-                    <View style={styles.recentItem}>
-                        <View style={styles.activityIndicator}></View>
-                        <View style={{ width: 250 }}>
-                            <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
-                                Realizó un trabajo de  <Text style={{ fontWeight: "400" }}>reparación</Text> y fue calificado con  <Text style={{ fontWeight: "400" }}>5</Text>
-                            </Text>
-                        </View>
-                    </View>
+                        {comments.map(c => {
+                            return (
+                            <View style={styles.recentItem} key={c.id}>
+                            <View style={styles.activityIndicator}></View>
+                            <View style={{ width: 250 }}>
+                                <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
+                                <Text style={{ fontWeight: "400" }}>Calificación: {c.rating} {'\n'}</Text>
+                                <Text style={{ fontWeight: "400" }}>{c.comments}</Text>
+                                </Text>
+                            </View>
+                            </View>
+                            )
+                        })}
 
-                    <View style={styles.recentItem}>
-                        <View style={styles.activityIndicator}></View>
-                        <View style={{ width: 250 }}>
-                            <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
-							Realizó un trabajo por <Text style={{ fontWeight: "400" }}>encargo</Text> y fue calificado con  <Text style={{ fontWeight: "400" }}>4</Text>
-                            </Text>
-                        </View>
-                    </View>
 
-                </View>                
+                </View>             
                 
                 <View style={styles.section}>
                         <Button

@@ -56,6 +56,7 @@ export default function ({ navigation, setLoggedIn, setRegister, setAuth }) {
     fetch("https://tdp-backend-develop.onrender.com/login/", requestOptions)
       .then(response => response.json())
       .then(async result => {
+        console.log(result)
         console.log(result.user_id)
         storeData(result.user_id.toString())
         .then(()=> {

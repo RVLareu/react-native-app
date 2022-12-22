@@ -24,7 +24,11 @@ export default function ({ navigation }) {
     const [name, setName] = useState('')
     const [profession, setProfession] = useState('')
     const [rating, setRating] = useState('')
+    const [profilePic, setProfilePic] = useState('https://upload.wikimedia.org/wikipedia/commons/2/2f/No-photo-m.png')
+
+    const [comments, setComments] = useState([])
     const { isDarkmode} = useTheme();
+
 
     useEffect(()=>{
         var myHeaders = new Headers();
@@ -41,6 +45,8 @@ export default function ({ navigation }) {
         fetch(`https://tdp-backend-develop.onrender.com/profile/?user_id=${user_id}`, requestOptions)
             .then(response => response.json())
             .then(result => {
+                setProfilePic(result.link_pic)
+
                 setName(result.name)
                 fetch(`https://tdp-backend-develop.onrender.com/professions?profession_id=${result.profession_id}`, requestOptions)
                 .then(response => response.json())
@@ -54,6 +60,14 @@ export default function ({ navigation }) {
                 .then(response => response.json())
                 .then(result => setRating(result.mean))
                 console.log(result)
+                fetch(`https://tdp-backend-develop.onrender.com/rating?professional_id=${user_id}`)
+                .then(response => response.json())
+                .then(result =>{ try{
+                    setComments(result.ratings)
+                } catch(e) {
+                    console.log(e)
+                }}
+                    )
             })
             .catch(error => console.log('error', error));
     })
@@ -83,7 +97,7 @@ export default function ({ navigation }) {
 
                 <View style={{ alignSelf: "center" }}>
                     <View style={styles.profileImage}>
-                        <Image source={require("../../assets/profile-pic.jpg")} style={styles.image} resizeMode="center"></Image>
+                        <Image source={{uri: profilePic}} style={styles.image} resizeMode="center"></Image>
                     </View>
                     <View style={styles.active}></View>
                 </View>
@@ -105,45 +119,23 @@ export default function ({ navigation }) {
 
                 </View>
 
-                <View style={{ marginTop: 32 }}>
-                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                        <View style={styles.mediaImageContainer}>
-                            <Image source={require("../../assets/media1.jpg")} style={styles.image} resizeMode="cover"></Image>
-                        </View>
-                        <View style={styles.mediaImageContainer}>
-                            <Image source={require("../../assets/media2.jpg")} style={styles.image} resizeMode="cover"></Image>
-                        </View>
-                        <View style={styles.mediaImageContainer}>
-                            <Image source={require("../../assets/media3.jpg")} style={styles.image} resizeMode="cover"></Image>
-                        </View>
-                    </ScrollView>
-                    <View style={styles.jobsCount}>
-                        <Text style={[styles.text, { fontSize: 24, color: "#DFD8C8", fontWeight: "300" }]}>3</Text>
-                        <Text style={[styles.text, { fontSize: 12, color: "#DFD8C8", textTransform: "uppercase" }]}>Destacados</Text>
-                    </View>
-                </View>
-
                 <Text style={[styles.subText, styles.recent]}>Últimos Trabajos</Text>
 
                 <View style={{ alignItems: "center" }}>
-				
-                    <View style={styles.recentItem}>
-                        <View style={styles.activityIndicator}></View>
-                        <View style={{ width: 250 }}>
-                            <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
-                                Realizó un trabajo de  <Text style={{ fontWeight: "400" }}>reparación</Text> y fue calificado con  <Text style={{ fontWeight: "400" }}>5</Text>
-                            </Text>
-                        </View>
-                    </View>
+                        {comments.map(c => {
+                            return (
+                            <View style={styles.recentItem} key={c.user_id}>
+                            <View style={styles.activityIndicator}></View>
+                            <View style={{ width: 250 }}>
+                                <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
+                                <Text style={{ fontWeight: "400" }}>Calificación: {c.rating} {'\n'}</Text>
+                                <Text style={{ fontWeight: "400" }}>{c.comments}</Text>
+                                </Text>
+                            </View>
+                            </View>
+                            )
+                        })}
 
-                    <View style={styles.recentItem}>
-                        <View style={styles.activityIndicator}></View>
-                        <View style={{ width: 250 }}>
-                            <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
-							Realizó un trabajo por <Text style={{ fontWeight: "400" }}>encargo</Text> y fue calificado con  <Text style={{ fontWeight: "400" }}>4</Text>
-                            </Text>
-                        </View>
-                    </View>
 
                 </View>
                 
