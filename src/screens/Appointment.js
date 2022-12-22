@@ -26,7 +26,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 const getData = async () => {
     try {
-        const value = await AsyncStorage.getItem('user_id2')
+        const value = await AsyncStorage.getItem('user_id')
         console.log("value:", value)
         return value
     } catch(e) {
@@ -68,12 +68,13 @@ export default function ({ navigation, route }) {
     
     console.log(date2)
     getData()
-        .then((user_id) =>
+        .then((user_id) =>{
+          console.log("user", user_id)
     Api.post("/appointments/", 
                   JSON.stringify({ 'user_id': user_id, 'professional_id': id, 'date': date2 }),
                 {
                     headers: { 'Content-Type': 'application/json' }
-                }))  
+                })})  
                 
    handleShowAlert();               
   }
