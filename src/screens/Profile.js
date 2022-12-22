@@ -110,7 +110,7 @@ export default function ({ navigation }) {
 
                 <View style={styles.statsContainer}>
                     <View style={styles.statsBox}>
-                        <Text style={[styles.text, { fontSize: 24 }]}>137</Text>
+                        <Text style={[styles.text, { fontSize: 24 }]}>{comments.length}</Text>
                         <Text style={[styles.text, styles.subText]}>Trabajos</Text>
                     </View>
                     <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
@@ -175,8 +175,8 @@ const styles = StyleSheet.create({
         fontWeight: "500"
     },
     profileImage: {
-        width: 200,
-        height: 200,
+        width: 300,
+        height: 300,
         borderRadius: 100,
         overflow: "hidden"
     },
