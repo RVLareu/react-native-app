@@ -6,9 +6,18 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import FileLoader from '../components/FileLoader';
 
 
-const getData = async () => {
+const getDataUser_id = async () => {
     try {
         const value = await AsyncStorage.getItem('user_id')
+        return value
+    } catch(e) {
+        console.log(e)
+    }
+}
+
+const getDataImage_url = async () => {
+    try {
+        const value = await AsyncStorage.getItem('image_url')
         return value
     } catch(e) {
         console.log(e)
@@ -25,6 +34,8 @@ export default function ({ navigation }) {
 
     const [professions, setProfessions] = useState([]);
     const { isDarkmode} = useTheme();
+    
+    const [user_id, setUser_id] = useState("");
 
 
     useEffect(()=>{
@@ -43,7 +54,7 @@ export default function ({ navigation }) {
             .then(result => setProfessions(result))
             .catch(error => console.log('error', error));
 
-        getData()
+        getDataUser_id()
             .then((user_id) => {
             fetch(`https://tdp-backend-develop.onrender.com/profile/?user_id=${user_id}`, getOptions)
                 .then(response => response.json())
@@ -51,17 +62,19 @@ export default function ({ navigation }) {
                     setNewName(result.name)
                     setNewProfessionId(result.profession_id)
                 })
+                .then(setUser_id(user_id))
                 .catch(error => console.log('error', error));
         })
     }, [])
 
     const saveProfileChanges = () => {
-        getData()
-            .then(async (user_id) => {
+        getDataImage_url()
+            .then(async (image_url) => {
+                console.log("IMAGE URL"+image_url)
                 var myHeaders = new Headers();
                 myHeaders.append("accept", "application/json");
                 myHeaders.append("Content-Type", "application/json");
-                const image_url = await AsyncStorage.getItem('image_url')
+                //const image_url = await getDataImage_url()
                 var raw = JSON.stringify({
                     "user_id": user_id,
                     "name": newName,

@@ -5,6 +5,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //const FILELOADER_URL = '/loadFiles';
 
+
+const storeData = async (value) => {
+  try {
+    await AsyncStorage.setItem('image_url', value)
+  } catch (e) {
+    // saving error
+    console.log(e)
+    console.log("IMAGE_URL"+value)
+  }
+}
+
+
 export default function ({ navigation }) {
 
     const CLOUD_NAME = 'dwx9rqfjh';
@@ -28,8 +40,9 @@ export default function ({ navigation }) {
             {method: "POST",
                 body: data})
             .then(resp => resp.json())
-            .then(data => setUrl(data.url))
-            .then(AsyncStorage.setItem("image_url",  url))
+            .then(data => {setUrl(data.url);
+            storeData(data.url.toString());
+            })
             .then(setSuccess(true))
           
             //const data2 = await response.json()
@@ -45,13 +58,13 @@ export default function ({ navigation }) {
                         <img src={url} alt="Preview"/>
                         <button onClick={() => {
                             //navigation.goBack();
-                            AsyncStorage.setItem("image_url",  url)}}> Volver </button>
+                            storeData(url.toString())}}> Volver </button>
                     </section>)
 
                 : (<section className="custom" style={{backgroundColor: 'grey'}}>
 
                     <h1>
-                        <span>Cargar foto</span><br/>
+                        <span>Cargar foto</span>
                     </h1>
 
                     <div className="App">
