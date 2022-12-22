@@ -15,6 +15,13 @@ import Api from "../components/api/Session";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment'
 import AwesomeAlert from 'react-native-awesome-alerts';
+import {
+  Layout,
+  TopNav,
+  themeColor,
+  useTheme,
+} from "react-native-rapi-ui";
+import { Ionicons } from "@expo/vector-icons";
  
 
 const getData = async () => {
@@ -77,9 +84,21 @@ export default function ({ navigation, route }) {
      setDate(date)
   }
   
-
+  const { isDarkmode } = useTheme();
+  
     return (
       <ScrollView style={styles.container}>
+       <TopNav
+        middleContent="Acordar cita"
+        leftContent={
+          <Ionicons
+            name="chevron-back"
+            size={20}
+            color={isDarkmode ? themeColor.white100 : "#191921"}
+          />
+        }
+        leftAction={() => navigation.goBack()}
+      />
           <View style={styles.header}>
             <ImageBackground
               source={require('../../assets/background.png')}
