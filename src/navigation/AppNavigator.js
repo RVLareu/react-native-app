@@ -62,7 +62,7 @@ const MainTabs = () => {
         component={Home}
         options={{
           tabBarLabel: ({ focused }) => (
-            <TabBarText focused={focused} title="Home" />
+            <TabBarText focused={focused} title="Inicio" />
           ),
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} icon={"md-home"} />
@@ -74,7 +74,7 @@ const MainTabs = () => {
         component={Profile}
         options={{
           tabBarLabel: ({ focused }) => (
-            <TabBarText focused={focused} title="Profile" />
+            <TabBarText focused={focused} title="Perfil" />
           ),
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} icon={"person"} />

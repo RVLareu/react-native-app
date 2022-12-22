@@ -103,9 +103,9 @@ export default function ({ navigation, route }) {
                 <Text style={[styles.subText, styles.recent]}>Últimos Trabajos</Text>
 
                 <View style={{ alignItems: "center" }}>
-                        {comments.map(c => {
+                        {comments.map((c, index) => {
                             return (
-                            <View style={styles.recentItem} key={c.id}>
+                            <View style={styles.recentItem} key={index}>
                             <View style={styles.activityIndicator}></View>
                             <View style={{ width: 250 }}>
                                 <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>

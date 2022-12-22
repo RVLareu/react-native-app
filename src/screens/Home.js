@@ -133,12 +133,13 @@ export default function ({ navigation }) {
           <SectionContent>
           
             <Button
-              text="Profesiones"
+              text="Buscar Profesiones"
               onPress={() => {
                 navigation.navigate("Profesiones");
               }}
               style={{
                 marginTop: 10,
+                paddingVertical: 20
               }}
             />
           </SectionContent>

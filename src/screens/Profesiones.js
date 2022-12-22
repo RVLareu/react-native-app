@@ -121,8 +121,9 @@ const styles = StyleSheet.create({
 
   name: {
     fontWeight: '600',
-    fontSize: 16,
+    fontSize: 26,
     marginLeft: 13,
+    
   },
 
   separator: {
