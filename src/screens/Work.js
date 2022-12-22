@@ -218,15 +218,15 @@ export default function ({ navigation, route }) {
                                         />
                                                                     </>
                                                         ):  userIsProfessional && work ? (<View style={{flex:1, alignItems: 'center'}}>
-                                                        <Text style={{alignText: 'center', marginTop: 20, fontSize: 40, fontWeight: 'bold', textTransform: 'uppercase'}}> {title}</Text>
-                                                        <Text style={{alignText: 'center', marginTop: 20, fontSize: 20}}> {description}</Text>
+                                                        <Text style={{textAlign: 'center', marginTop: 20, fontSize: 40, fontWeight: 'bold', textTransform: 'uppercase'}}> {title}</Text>
+                                                        <Text style={{textAlign: 'center', marginTop: 20, fontSize: 20}}> {description}</Text>
                                                         <Text style={{alignText: 'center', marginTop: 20, fontWeight: 'bold', fontSize: 30}}> ${price}</Text>
                                                         <Text style={{alignText: 'center', marginTop: 20, fontWeight: 'bold', fontSize: 30}}> {paid ? <View style={{flex:1, justifyContent: 'center', alignContent:'center', alignItems: 'center'}}><Ionicons name="checkmark-circle-outline" size={80} color="#00FF00"></Ionicons><Text>PAGADO</Text></View> : <View style={{flex:1, justifyContent: 'center', alignContent:'center'}}><Text>SIN PAGAR</Text><Ionicons name="close-circle-outline" size={80} color="#FF0000"></Ionicons></View>}</Text>
 
                                                         </View>
                                                         ): !userIsProfessional && work ? <View style={{flex:1, alignItems: 'center'}}>
-                                                        <Text style={{alignText: 'center', marginTop: 20, fontSize: 40, fontWeight: 'bold', textTransform: 'uppercase'}}> {title}</Text>
-                                                        <Text style={{alignText: 'center', marginTop: 20, fontSize: 20}}> {description}</Text>
+                                                        <Text style={{textAlign: 'center', marginTop: 20, fontSize: 40, fontWeight: 'bold', textTransform: 'uppercase'}}> {title}</Text>
+                                                        <Text style={{textAlign: 'center', marginTop: 20, fontSize: 20}}> {description}</Text>
                                                         <Text style={{alignText: 'center', marginTop: 20, fontWeight: 'bold', fontSize: 30}}> ${price}</Text>
                                                         <Text style={{alignText: 'center', marginTop: 20, fontWeight: 'bold', fontSize: 30}}> {paid ? <View style={{flex:1, justifyContent: 'center', alignContent:'center', alignItems: 'center'}}><Ionicons name="checkmark-circle-outline" size={80} color="#00FF00"></Ionicons><Text>PAGADO</Text></View> :                                                         
                                                         <View style={{flex:1}}>
