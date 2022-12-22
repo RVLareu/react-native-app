@@ -80,7 +80,6 @@ export default function ({ navigation, route }) {
                         <Image source={{uri: profilePic}} style={styles.image} resizeMode="center"></Image>
                     </View>
 
-                    <View style={styles.active}></View>
                 </View>
 
                 <View style={styles.infoContainer}>
@@ -90,11 +89,11 @@ export default function ({ navigation, route }) {
 
                 <View style={styles.statsContainer}>
                     <View style={styles.statsBox}>
-                        <Text style={[styles.text, { fontSize: 24 }]}>137</Text>
+                        <Text style={[styles.text, { fontSize: 24 }]}>{comments.length}</Text>
                         <Text style={[styles.text, styles.subText]}>Trabajos</Text>
                     </View>
                     <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
-                        <Text style={[styles.text, { fontSize: 24 }]}>{rating}</Text>
+                        <Text style={[styles.text, { fontSize: 24 }]}>{parseFloat(rating).toFixed(2)}</Text>
                         <Text style={[styles.text, styles.subText]}>Calificación</Text>
                     </View>
 
@@ -121,7 +120,7 @@ export default function ({ navigation, route }) {
 
                 </View>             
                 
-                <View style={styles.section}>
+                <View style={styles.button}>
                         <Button
                             text={"Agendar"}
                             onPress={() => navigation.navigate("Appointment",  {"name": name2, "profession_id": profession_id, "id": id})}
@@ -255,5 +254,12 @@ const styles = StyleSheet.create({
     section: {
         paddingTop: 20,
         paddingBottom: 20
+    },
+    button: {
+        flex:1,
+        width: '50%',
+        marginLeft: '25%',
+        marginTop: '20%'
+
     }
 });
