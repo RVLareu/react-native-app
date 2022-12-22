@@ -61,7 +61,7 @@ export default function ({ navigation }) {
 				'professional_id': item.professional_id
 			})
 			}}>
-			<Text style={ styles.name }>{item.date.split('T')}</Text>
+			<Text style={ styles.name }>{item.date.split('T')[0].split('-')[2] + '/' + item.date.split('T')[0].split('-')[1] + '  -  ' +  item.date.split('T')[1].split(':')[0] + ':' + item.date.split('T')[1].split(':')[1] + ' hs'}</Text>
 			</TouchableOpacity>
 		</View>    
 		);
@@ -164,7 +164,7 @@ export default function ({ navigation }) {
 	
 		name: {
 		fontWeight: '600',
-		fontSize: 16,
+		fontSize: 26,
 		marginLeft: 13,
 		},
 	
