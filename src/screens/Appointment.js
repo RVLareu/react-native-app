@@ -5,7 +5,7 @@ import {
   View,
   Image,
   TouchableOpacity,
-  Button,
+  
   ScrollView,
   ImageBackground
 } from 'react-native';
@@ -20,6 +20,7 @@ import {
   TopNav,
   themeColor,
   useTheme,
+  Button
 } from "react-native-rapi-ui";
 import { Ionicons } from "@expo/vector-icons";
  
@@ -100,21 +101,7 @@ export default function ({ navigation, route }) {
         }
         leftAction={() => navigation.goBack()}
       />
-          <View style={styles.header}>
-            <ImageBackground
-              source={require('../../assets/background.png')}
-              style={styles.background}
-            ></ImageBackground>
-          </View>
-          <Image style={styles.avatar} source={{uri: 'https://image.shutterstock.com/mosaic_250/2780032/1854697390/stock-photo-head-shot-young-attractive-businessman-in-glasses-standing-in-modern-office-pose-for-camera-1854697390.jpg'}}/>
 
-          <View style={styles.body}>
-            <View style={styles.bodyContent}>
-              <Text style={styles.name}>Lucas Monk</Text>
-              <Text style={styles.info}>Electricista</Text>
-            </View>
-          </View>
-   
         <Text style={styles.textSelect}>Seleccione una fecha</Text>
          
         <View style={styles.datePickerView}>
@@ -124,13 +111,12 @@ export default function ({ navigation, route }) {
           />
         </View>
         
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity style={styles.buttonContainer} onPress={()=>{Agendar()}}>
-            <Text style={styles.text}>Aceptar</Text>  
-          </TouchableOpacity>        
-            
-        </View>
-        
+        <View style={styles.button}>
+                        <Button
+                            text={"Confirmar"}
+                            onPress={() => Agendar()}
+                        />
+               </View>
         <AwesomeAlert
                   show={showAlert}
                   showProgress={false}
@@ -245,7 +231,7 @@ const styles = StyleSheet.create({
     current: "2022-11-01"
   },
   container: {
-      backgroundColor: "#0a0a1a",
+      backgroundColor: "grey",
       height: '100%',
 
   },
@@ -253,7 +239,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: "#0a0a1a",
     marginTop: 10
   },
   icon:{
@@ -287,6 +272,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#0a0a1a",
 
     
-  }
+  },
+  button: {
+    flex:1,
+    width: '50%',
+    marginLeft: '25%',
+    marginTop: '5%'
+
+}
   
 });
