@@ -98,6 +98,9 @@ export default function ({ navigation }) {
                 aspect: [4, 3],
                 quality: 1,
                 })
+                .catch (err =>
+                  console.log(err)
+           )
          //storeImage(response.assets[0])
          //const response = (result.uri.toString())
          /*setFile(file => ({
