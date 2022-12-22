@@ -26,18 +26,13 @@ export default function ({ navigation }) {
     <View >
       <TouchableOpacity style={ styles.item } onPress={()=>{
         navigation.navigate("Profesionales", {'itemId': item.id})
-      }}>
-        <View style={ styles.avatarContainer }>
-          <Image source={ {uri: item.link_pic} } style={ styles.avatar } />
-        </View>      
+      }}> 
         <Text style={ styles.name }>{item.title}</Text>
         </TouchableOpacity>
     </View>    
   );
 
-  const headerComponent = () => {
-    return <Text style={ styles.listHeadline }>Profesiones</Text>        
-  }
+
 
   const listSeparator = () => {
     return <View style={ styles.separator } />
@@ -67,8 +62,6 @@ export default function ({ navigation }) {
         {/* This text using ubuntu font */}
         <SafeAreaView style={ styles.container }>
       <FlatList 
-        ListHeaderComponentStyle = { styles.listHeader }
-        ListHeaderComponent = { headerComponent }              
         ListEmptyComponent = { <Text>Lista de profesiones</Text> }
         data = { professions }
         renderItem={oneProfession}        
@@ -108,7 +101,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',    
     alignItems: 'center',
-    paddingVertical: 13,    
+    paddingVertical: 30,    
   },
 
   avatarContainer: {        

@@ -42,9 +42,6 @@ export default function ({ navigation, route }) {
     </View>    
   );
 
-  const headerComponent = () => {
-    return <Text style={ styles.listHeadline }>Profesionales</Text>        
-  }
 
   const listSeparator = () => {
     return <View style={ styles.separator } />
@@ -72,9 +69,7 @@ export default function ({ navigation, route }) {
       >
         {/* This text using ubuntu font */}
         <SafeAreaView style={ styles.container }>
-      <FlatList 
-        ListHeaderComponentStyle = { styles.listHeader }
-        ListHeaderComponent = { headerComponent }              
+      <FlatList              
         ListEmptyComponent = { <Text>Aún no hay profesionales</Text> }
         data = { professionals }
         renderItem={oneProfessional}        
