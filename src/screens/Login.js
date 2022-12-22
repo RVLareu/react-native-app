@@ -66,8 +66,9 @@ export default function ({ navigation, setLoggedIn, setRegister, setAuth }) {
         })}
       )
       .catch(error => {
-        setLoading(false);
+        // setLoading(false);
         console.log('error', error)
+        login()
       });
   }
   return (

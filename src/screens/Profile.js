@@ -5,6 +5,7 @@ import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView,
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Layout, TextInput, Button, useTheme, TopNav , themeColor} from "react-native-rapi-ui";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { mcall } from "q";
 
 const getData = async () => {
     try {
@@ -113,7 +114,7 @@ export default function ({ navigation }) {
                         <Text style={[styles.text, styles.subText]}>Trabajos</Text>
                     </View>
                     <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
-                        <Text style={[styles.text, { fontSize: 24 }]}>{rating}</Text>
+                        <Text style={[styles.text, { fontSize: 24 }]}>{parseFloat(rating).toFixed(2)}</Text>
                         <Text style={[styles.text, styles.subText]}>Calificación</Text>
                     </View>
 
@@ -122,9 +123,10 @@ export default function ({ navigation }) {
                 <Text style={[styles.subText, styles.recent]}>Últimos Trabajos</Text>
 
                 <View style={{ alignItems: "center" }}>
-                        {comments.map(c => {
+                        {comments.map((c, index) => {
+                            console.log(c)
                             return (
-                            <View style={styles.recentItem} key={c.user_id}>
+                            <View style={styles.recentItem} key={index}>
                             <View style={styles.activityIndicator}></View>
                             <View style={{ width: 250 }}>
                                 <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
@@ -139,12 +141,6 @@ export default function ({ navigation }) {
 
                 </View>
                 
-                <View style={styles.section}>
-                        <Button
-                            text={"Editar"}
-                            onPress={() => navigation.navigate("ProfileEdit")}
-                        />
-                    </View>
 
 
             </ScrollView>

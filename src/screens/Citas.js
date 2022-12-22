@@ -61,7 +61,7 @@ export default function ({ navigation }) {
 				'professional_id': item.professional_id
 			})
 			}}>
-			<Text style={ styles.name }>{item.date}</Text>
+			<Text style={ styles.name }>{item.date.split('T')}</Text>
 			</TouchableOpacity>
 		</View>    
 		);
